@@ -167,7 +167,7 @@ const Hero = () => {
 
       <div className="hero-img w-full max-w-6xl mx-auto mt-20 relative rounded-2xl overflow-hidden shadow-2xl bg-bento aspect-video flex items-center justify-center border border-foreground/5">
         <img
-          src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg`}
+          src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg?v=2`}
           alt="Premium Smart Display"
           className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply"
         />
@@ -196,7 +196,7 @@ const BentoGrid = () => {
               <p className="text-foreground/70 text-lg font-medium max-w-xl">Expertly managing everything from LAN/WAN and Wireless networking to advanced Storage and Servers.</p>
             </div>
             <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 transition-transform duration-700 group-hover:scale-105 pointer-events-none">
-              <img src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg`} className="w-full h-full object-cover mix-blend-luminosity" alt="Server Integration" />
+              <img src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg?v=2`} className="w-full h-full object-cover mix-blend-luminosity" alt="Server Integration" />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-bento"></div>
             </div>
           </div>
@@ -208,7 +208,7 @@ const BentoGrid = () => {
               <p className="text-foreground/70 text-xl font-medium max-w-md">Delivering sophisticated CCTV architecture and Command Control Room solutions for total security.</p>
             </div>
             <div className="w-full md:w-1/2 relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-xl">
-              <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="w-full h-full object-cover" alt="Command Center" />
+              <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="w-full h-full object-cover" alt="Command Center" />
             </div>
           </div>
         </div>

@@ -61,7 +61,7 @@ const ProductsPage = () => {
                         </div>
                     </div>
                     <div className="relative">
-                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} alt="Flagship Display" className="rounded-3xl shadow-2xl relative z-10" />
+                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} alt="Flagship Display" className="rounded-3xl shadow-2xl relative z-10" />
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ const ProductsPage = () => {
                 <div className="py-24 bg-bento fade-up">
                     <div className="max-w-5xl mx-auto px-6 text-center">
                         <div className="aspect-video bg-foreground rounded-3xl overflow-hidden relative flex items-center justify-center shadow-2xl group cursor-pointer">
-                            <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 transition-transform duration-700 group-hover:scale-105" alt="Video Cover" />
+                            <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 transition-transform duration-700 group-hover:scale-105" alt="Video Cover" />
                             <div className="w-20 h-20 bg-primary/90 rounded-full flex items-center justify-center relative z-10 backdrop-blur-sm pl-1 shadow-lg group-hover:bg-primary transition-colors">
                                 <PlayCircle className="text-white w-10 h-10" />
                             </div>
@@ -107,7 +107,7 @@ const ProductsPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                             <div className="relative order-2 md:order-1">
                                 <div className="w-full aspect-square bg-bento rounded-full absolute -top-10 -left-10 blur-3xl opacity-50"></div>
-                                <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="rounded-3xl shadow-xl relative z-10 mix-blend-multiply" alt="Features Detail" />
+                                <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="rounded-3xl shadow-xl relative z-10 mix-blend-multiply" alt="Features Detail" />
                             </div>
                             <div className="space-y-6 order-1 md:order-2">
                                 <div className="border-l-4 border-primary pl-6 py-2">
@@ -144,7 +144,7 @@ const ProductsPage = () => {
                             </ul>
                         </div>
                         <div className="relative">
-                            <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="rounded-3xl shadow-xl" alt="AI Interface" />
+                            <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="rounded-3xl shadow-xl" alt="AI Interface" />
                         </div>
                     </div>
                 </div>
@@ -228,7 +228,7 @@ const ProductsPage = () => {
                 />
                 <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
                     <div className="md:col-span-2 bg-background p-10 rounded-3xl overflow-hidden relative min-h-[400px] flex flex-col justify-end border border-foreground/5">
-                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-40 hover:scale-105 transition-transform duration-700" alt="Video Wall" />
+                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-40 hover:scale-105 transition-transform duration-700" alt="Video Wall" />
                         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
                         <div className="relative z-10">
                             <h3 className="text-3xl font-bold font-display mb-4">Video Wall Systems & Lobby Displays</h3>
@@ -287,7 +287,7 @@ const ProductsPage = () => {
                             <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Two-way audio monitoring</li>
                             <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Central control room software</li>
                         </ul>
-                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} className="absolute right-[-20%] bottom-[-20%] w-2/3 h-2/3 object-cover opacity-10 group-hover:scale-110 transition-transform duration-500 rounded-tl-full mix-blend-multiply" alt="CCTV Background" />
+                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="absolute right-[-20%] bottom-[-20%] w-2/3 h-2/3 object-cover opacity-10 group-hover:scale-110 transition-transform duration-500 rounded-tl-full mix-blend-multiply" alt="CCTV Background" />
                     </div>
 
                     {/* Box 3 */}

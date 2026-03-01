@@ -26,7 +26,7 @@ const AboutPage = () => {
                         </div>
                     </div>
                     <div className="bg-bento rounded-3xl p-10 relative overflow-hidden h-full min-h-[400px] flex items-center justify-center border border-foreground/5 shadow-xl">
-                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg`} alt="Team meeting" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
+                        <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} alt="Team meeting" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                     </div>
                 </div>
