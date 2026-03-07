@@ -6,6 +6,7 @@ import { ChevronRight, Monitor, Shield, Network, Mail, ArrowRight, Video, Server
 import ProductsPage from './ProductsPage';
 import AboutPage from './AboutPage';
 import ServicesPage from './ServicesPage';
+import ClientsPage from './ClientsPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,15 +40,15 @@ const ContactModal = ({ isOpen, onClose }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-foreground/80 mb-2">Name</label>
-              <input type="text" required className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-primary transition-colors text-foreground" placeholder="John Doe" />
+              <input type="text" required className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-[#FF9F1B] transition-colors text-foreground" placeholder="John Doe" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-foreground/80 mb-2">Email Address</label>
-              <input type="email" required className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-primary transition-colors text-foreground" placeholder="john@company.com" />
+              <input type="email" required className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-[#FF9F1B] transition-colors text-foreground" placeholder="john@company.com" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-foreground/80 mb-2">Inquiry Type</label>
-              <select className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-primary transition-colors text-foreground appearance-none">
+              <select className="w-full bg-background border border-foreground/10 rounded-xl px-4 py-3 outline-none focus:border-[#FF9F1B] transition-colors text-foreground appearance-none">
                 <option>Interactive Displays</option>
                 <option>Campus Infrastructure</option>
                 <option>Digital Signage</option>
@@ -55,7 +56,7 @@ const ContactModal = ({ isOpen, onClose }) => {
               </select>
             </div>
             <div className="pt-4 flex items-center gap-4">
-              <button type="submit" disabled={status !== ''} className="bg-primary text-white font-medium px-8 py-3 rounded-xl hover:bg-primary/90 transition-colors flex-1 shadow-sm disabled:opacity-50">
+              <button type="submit" disabled={status !== ''} className="bg-[#FF9F1B] text-white font-medium px-8 py-3 rounded-xl hover:bg-[#FF9F1B]/90 transition-colors flex-1 shadow-sm disabled:opacity-50">
                 {status || "Submit Inquiry"}
               </button>
             </div>
@@ -73,19 +74,19 @@ const Navbar = () => {
   return (
     <>
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-bento/50 transition-all duration-300">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F9F9F9] border-b border-bento/50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={`${import.meta.env.BASE_URL}INFINITYX.png`} alt="InfinityX" className="h-20" />
+            <img src={`${import.meta.env.BASE_URL}MATRIX%20PRODUCTS%20VISULAID%20(3)/INFINITYX.png`} alt="InfinityX" className="h-20" />
           </Link>
           <div className="hidden md:flex space-x-8 text-sm font-medium text-foreground/80">
-            <Link to="/products" className="hover:text-primary transition-colors">Interactive Displays</Link>
-            <Link to="/services" className="hover:text-primary transition-colors">Digital Solutions</Link>
-            <Link to="/about" className="hover:text-primary transition-colors">Company</Link>
-            <Link to="/#clients" className="hover:text-primary transition-colors">Clients</Link>
+            <Link to="/products" className="hover:text-[#FF9F1B] transition-colors">Interactive Displays</Link>
+            <Link to="/services" className="hover:text-[#FF9F1B] transition-colors">Digital Solutions</Link>
+            <Link to="/about" className="hover:text-[#FF9F1B] transition-colors">Company</Link>
+            <Link to="/clients" className="hover:text-[#FF9F1B] transition-colors">Clients</Link>
           </div>
           <div className="hidden md:flex">
-            <button onClick={() => setIsContactModalOpen(true)} className="bg-foreground text-background px-4 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-foreground/90 transition-colors font-medium">
+            <button onClick={() => setIsContactModalOpen(true)} className="bg-[#FF9F1B] text-white px-4 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#FF9F1B]/90 transition-colors font-medium shadow-md">
               Contact Sales <ChevronRight size={16} />
             </button>
           </div>
@@ -99,10 +100,10 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-background border-b border-bento/50 px-6 py-4 flex flex-col space-y-4">
-            <Link to="/products" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-primary">Interactive Displays</Link>
-            <Link to="/services" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-primary">Digital Solutions</Link>
-            <Link to="/about" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-primary">Company</Link>
-            <Link to="/#clients" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-primary">Clients</Link>
+            <Link to="/products" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-[#FF9F1B]">Interactive Displays</Link>
+            <Link to="/services" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-[#FF9F1B]">Digital Solutions</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-[#FF9F1B]">Company</Link>
+            <Link to="/clients" onClick={() => setIsOpen(false)} className="text-foreground/80 font-medium hover:text-[#FF9F1B]">Clients</Link>
             <button onClick={() => setIsContactModalOpen(true)} className="bg-foreground text-background px-4 py-2 rounded-full text-sm flex items-center justify-center gap-2 hover:bg-foreground/90 transition-colors font-medium">
               Contact Sales <ChevronRight size={16} />
             </button>
@@ -115,7 +116,6 @@ const Navbar = () => {
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const textRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -134,88 +134,106 @@ const Hero = () => {
         ease: 'power3.out',
         delay: 0.8
       });
-      gsap.from('.hero-img', {
-        scale: 1.05,
-        opacity: 0,
-        duration: 1.5,
-        ease: 'power3.out',
-        delay: 1.2
-      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} className="pt-32 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden relative z-10">
-      <div ref={textRef} className="max-w-5xl mx-auto z-10">
+    <section ref={containerRef} className="h-screen flex flex-col items-center justify-center text-center overflow-hidden relative z-10 px-6">
+      <div className="max-w-5xl mx-auto z-10">
         <h1 className="text-dynamic-hero text-foreground mb-6 flex flex-wrap justify-center gap-x-4">
           <span className="hero-word overflow-hidden inline-block text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70">Infrastructure.</span>
           <br className="hidden md:block" />
           <span className="hero-word inline-block">Integrated.</span>
           <span className="hero-word inline-block">Intelligent.</span>
-          <span className="hero-word inline-block text-primary">Infinite.</span>
+          <span className="hero-word inline-block text-[#FF9F1B]">InfinityX.</span>
         </h1>
         <p className="hero-sub text-xl md:text-2xl text-foreground/60 max-w-3xl mx-auto mb-12 font-medium tracking-tight">
           Premier system integration partner delivering high-performance<br className="hidden md:block" /> IT infrastructure and intelligent display solutions.
         </p>
         <div className="hero-sub flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link to="/products" className="w-full sm:w-auto bg-primary text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-            Explore Panels <ArrowRight size={20} />
+          <Link to="/products" className="w-full sm:w-auto bg-[#FF9F1B] text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-[#FF9F1B]/90 transition-colors shadow-lg shadow-[#FF9F1B]/20 flex items-center justify-center gap-2">
+            Explore Products <ArrowRight size={20} />
           </Link>
         </div>
       </div>
-
-      <div className="hero-img w-full max-w-6xl mx-auto mt-20 relative rounded-2xl overflow-hidden shadow-2xl bg-bento aspect-video flex items-center justify-center border border-foreground/5">
-        <img
-          src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg?v=2`}
-          alt="Premium Smart Display"
-          className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply"
-        />
-      </div>
     </section>
   );
 };
 
-const BentoGrid = () => {
+// Reusable full-screen scroll section with alternating image placement
+const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, ctaTo, imageOnRight = true }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      // Entrance animation for text elements
+      gsap.from('.ss-text', {
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 0,
+        x: imageOnRight ? -100 : 100, // Slide in from opposite side of image
+        duration: 1.2,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+
+      // Entrance animation for image
+      gsap.from('.ss-img', {
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 0,
+        x: imageOnRight ? 100 : -100, // Slide in from its side
+        scale: 0.9,
+        rotateY: imageOnRight ? -10 : 10,
+        duration: 1.5,
+        ease: 'power2.out',
+      });
+    }, el);
+    return () => ctx.revert();
+  }, [imageOnRight]);
+
   return (
-    <section className="py-24 px-6 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="col-span-1 md:col-span-1 bg-bento p-10 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-            <div className="z-10 relative">
-              <Shield className="text-primary mb-6 w-10 h-10" />
-              <h3 className="text-2xl font-bold mb-4 font-display tracking-tight text-foreground">A Decade of Expertise.</h3>
-              <p className="text-foreground/70 font-medium">Established in 2013, we have spent ten years providing IT solutions to blue-chip enterprises and educational institutes.</p>
-            </div>
+    <section ref={ref} className="min-h-screen flex items-center bg-background border-t border-bento/50 py-32 px-6 overflow-hidden">
+      <div className={`max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-5 gap-24 items-center ${!imageOnRight ? 'lg:[direction:rtl]' : ''}`}>
+        {/* Text block — always LTR internally */}
+        <div className="lg:[direction:ltr] lg:col-span-2 space-y-6">
+          <span className="ss-text block text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs md:text-sm">{badge}</span>
+          <h2 className="ss-text text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight text-foreground leading-[1.15]">{title}</h2>
+          <p className="ss-text text-lg md:text-xl text-foreground/60 font-medium max-w-xl leading-relaxed">{description}</p>
+          <div className="ss-text pt-2">
+            <Link
+              to={ctaTo}
+              className="inline-flex items-center gap-3 bg-[#FF9F1B] text-white px-8 py-4 rounded-full text-base font-bold hover:bg-[#FF9F1B]/90 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-[#FF9F1B]/20"
+            >
+              {ctaLabel} <ArrowRight size={20} />
+            </Link>
           </div>
+        </div>
 
-          <div className="col-span-1 md:col-span-2 bg-bento p-10 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-            <div className="z-10 min-h-[200px] flex flex-col justify-end">
-              <Network className="text-primary mb-6 w-10 h-10" />
-              <h3 className="text-3xl md:text-4xl font-bold mb-4 font-display tracking-tight text-foreground max-w-lg">Holistic Integration.</h3>
-              <p className="text-foreground/70 text-lg font-medium max-w-xl">Expertly managing everything from LAN/WAN and Wireless networking to advanced Storage and Servers.</p>
-            </div>
-            <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 transition-transform duration-700 group-hover:scale-105 pointer-events-none">
-              <img src={`${import.meta.env.BASE_URL}scroll/home_page_final.jpeg?v=2`} className="w-full h-full object-cover mix-blend-luminosity" alt="Server Integration" />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-bento"></div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-3 bg-bento p-10 md:p-16 rounded-3xl flex flex-col md:flex-row items-center justify-between overflow-hidden relative group">
-            <div className="z-10 w-full md:w-1/2 mb-10 md:mb-0 pr-8">
-              <Monitor className="text-primary mb-6 w-10 h-10" />
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 font-display tracking-tight text-foreground">Intelligent<br />Surveillance.</h3>
-              <p className="text-foreground/70 text-xl font-medium max-w-md">Delivering sophisticated CCTV architecture and Command Control Room solutions for total security.</p>
-            </div>
-            <div className="w-full md:w-1/2 relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-xl">
-              <img src={`${import.meta.env.BASE_URL}scroll/cc_cams.jpeg?v=2`} className="w-full h-full object-cover" alt="Command Center" />
-            </div>
-          </div>
+        {/* Image block */}
+        <div className="ss-img relative lg:[direction:ltr] lg:col-span-3">
+          <div className="absolute inset-0 -m-12 bg-[#FF9F1B]/5 rounded-3xl blur-3xl pointer-events-none" />
+          <img
+            src={image}
+            alt={imageAlt}
+            className="relative w-full max-h-[800px] object-contain drop-shadow-2xl"
+          />
         </div>
       </div>
     </section>
   );
 };
+
+
 
 const ClientMarquee = () => {
   const marqueeRef = useRef(null);
@@ -253,7 +271,7 @@ const ClientMarquee = () => {
         <div className="marquee-track flex gap-12 md:gap-16 px-8 items-center">
           {clients.concat(clients).map((client, i) => (
             <div key={i} className="flex-shrink-0 w-32 h-20 md:w-40 md:h-24 hover:scale-105 transition-transform duration-300">
-              <img src={`${import.meta.env.BASE_URL}scroll/${client}`} alt={`Ecosystem Partner ${i}`} className="w-full h-full object-contain mix-blend-multiply opacity-80 hover:opacity-100 transition-opacity" />
+              <img src={`${import.meta.env.BASE_URL}scroll/${encodeURIComponent(client)}`} alt={`Ecosystem Partner ${i}`} className="w-full h-full object-contain mix-blend-multiply opacity-80 hover:opacity-100 transition-opacity" />
             </div>
           ))}
         </div>
@@ -271,7 +289,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-6">
-              <img src={`${import.meta.env.BASE_URL}INFINITYX.png`} alt="InfinityX" className="h-16" />
+              <img src={`${import.meta.env.BASE_URL}MATRIX%20PRODUCTS%20VISULAID%20(3)/INFINITYX.png`} alt="InfinityX" className="h-16" />
             </Link>
             <p className="text-white/60 font-medium max-w-sm mb-6">
               Premier system integration partner delivering high-performance IT infrastructure and intelligent display solutions.
@@ -318,8 +336,45 @@ const Footer = () => {
 
 const LandingPage = () => (
   <>
+    {/* Scroll-1: Hero — text only, fullscreen */}
     <Hero />
-    <BentoGrid />
+
+    {/* Scroll-2: Interactive Displays */}
+    <ScrollSection
+      image={`${import.meta.env.BASE_URL}MATRIX%20PRODUCTS%20VISULAID%20(3)/home_page_final.jpeg`}
+      imageAlt="InfinityX Interactive Displays"
+      badge="Flagship Product"
+      title="Interactive Displays. Built for Learning & Business."
+      description="InfinityX smart boards deliver 4K UHD visuals, 64-point multi-touch, built-in AI cameras, and an 8-array microphone system — engineered for education and enterprise collaboration."
+      ctaLabel="Explore Interactive Displays"
+      ctaTo="/products"
+      imageOnRight={true}
+    />
+
+    {/* Scroll-3: Holistic Integration */}
+    <ScrollSection
+      image={`${import.meta.env.BASE_URL}MATRIX%20PRODUCTS%20VISULAID%20(3)/Network.png`}
+      imageAlt="Holistic Network Integration"
+      badge="End-to-End Integration"
+      title="Holistic Integration. Connecting Every Layer."
+      description="From campus-wide LAN/WAN and wireless networks to advanced storage and server deployments — InfinityX architects the complete technology backbone your organization needs to scale."
+      ctaLabel="Explore Digital Solutions"
+      ctaTo="/services"
+      imageOnRight={false}
+    />
+
+    {/* Scroll-4: Intelligent Surveillance */}
+    <ScrollSection
+      image={`${import.meta.env.BASE_URL}MATRIX%20PRODUCTS%20VISULAID%20(3)/ccCamera.png`}
+      imageAlt="Intelligent Surveillance Systems"
+      badge="Security & Surveillance"
+      title="Intelligent Surveillance. Total Control."
+      description="Multi-camera CCTV architectures, command control room deployments, access control, and boom barrier solutions — comprehensive security intelligence for campuses and enterprises."
+      ctaLabel="Explore Security Solutions"
+      ctaTo="/services"
+      imageOnRight={true}
+    />
+
     <ClientMarquee />
   </>
 );
@@ -350,14 +405,15 @@ function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <ScrollToHash />
-      <div className="bg-background min-h-screen text-foreground selection:bg-primary/20 selection:text-primary scroll-smooth flex flex-col">
+      <div className="bg-background min-h-screen text-foreground selection:bg-[#FF9F1B]/20 selection:text-[#FF9F1B] scroll-smooth flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-24">
+        <main className="flex-grow pt-20">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/clients" element={<ClientsPage />} />
           </Routes>
         </main>
         <Footer />

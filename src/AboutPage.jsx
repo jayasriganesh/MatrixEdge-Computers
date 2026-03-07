@@ -32,8 +32,8 @@ const AboutPage = () => {
                 </div>
 
                 <div className="bg-background border border-bento rounded-3xl p-12 md:p-16 mb-24 shadow-sm relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                    <Target className="w-12 h-12 text-primary mb-8" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF9F1B]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <Target className="w-12 h-12 text-[#FF9F1B] mb-8" />
                     <h2 className="text-3xl lg:text-4xl font-display font-bold mb-6 text-foreground relative z-10">Mission</h2>
                     <p className="text-xl md:text-2xl text-foreground/80 font-medium leading-relaxed max-w-4xl relative z-10">
                         Our mission is to deliver superior value by offering high-quality products that seamlessly blend performance with competitive pricing. We are dedicated to cultivating successful and lasting relationships with both our customers and suppliers.
@@ -42,7 +42,7 @@ const AboutPage = () => {
 
                 <div>
                     <div className="text-center mb-16">
-                        <Compass className="w-12 h-12 text-primary mx-auto mb-6" />
+                        <Compass className="w-12 h-12 text-[#FF9F1B] mx-auto mb-6" />
                         <h2 className="text-3xl lg:text-4xl font-display font-bold mb-6 text-foreground">Our Approach</h2>
                         <p className="text-lg text-foreground/70 max-w-3xl mx-auto font-medium">
                             Rooted in our corporate ethos of perpetual enhancement and seamless integration, our company is steadfastly committed to delivering excellence through the robust framework of its quality management system. Our unwavering dedication is directed towards:
@@ -57,8 +57,8 @@ const AboutPage = () => {
                             "Offering candid and efficacious consultation and advice.",
                             "Ensuring swift and efficient delivery of both services and products."
                         ].map((text, i) => (
-                            <div key={i} className="bg-bento p-8 rounded-2xl flex items-start gap-4 border border-foreground/5 hover:border-primary/20 transition-colors">
-                                <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-1" />
+                            <div key={i} className="bg-bento p-8 rounded-2xl flex items-start gap-4 border border-foreground/5 hover:border-[#FF9F1B]/20 transition-colors">
+                                <CheckCircle2 className="w-6 h-6 text-[#FF9F1B] shrink-0 mt-1" />
                                 <p className="text-foreground/80 font-medium">{text}</p>
                             </div>
                         ))}
