@@ -165,6 +165,8 @@ const Hero = () => {
 const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, ctaTo, imageOnRight = true }) => {
   const ref = useRef(null);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -183,23 +185,33 @@ const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, c
         ease: 'power3.out',
       });
 
-      // Entrance animation for image
-      gsap.from('.ss-img', {
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        x: imageOnRight ? 100 : -100, // Slide in from its side
-        scale: 0.9,
-        rotateY: imageOnRight ? -10 : 10,
-        duration: 1.5,
-        ease: 'power2.out',
-      });
+      // Entrance animation for image — ONLY if loaded
+      if (isLoaded) {
+        gsap.fromTo('.ss-img-content',
+          {
+            opacity: 0,
+            x: imageOnRight ? 100 : -100,
+            scale: 0.9,
+            rotateY: imageOnRight ? -10 : 10,
+          },
+          {
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse',
+            },
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            rotateY: 0,
+            duration: 1.5,
+            ease: 'power2.out',
+          }
+        );
+      }
     }, el);
     return () => ctx.revert();
-  }, [imageOnRight]);
+  }, [imageOnRight, isLoaded]);
 
   return (
     <section ref={ref} className="min-h-screen flex items-center bg-background border-t border-bento/50 py-32 px-6 overflow-hidden">
@@ -220,14 +232,15 @@ const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, c
         </div>
 
         {/* Image block */}
-        <div className="ss-img relative lg:[direction:ltr] lg:col-span-3">
+        <div className="ss-img relative lg:[direction:ltr] lg:col-span-3 min-h-[400px] flex items-center justify-center bg-foreground/[0.02] rounded-3xl overflow-hidden">
           <div className="absolute inset-0 -m-12 bg-[#FF9F1B]/5 rounded-3xl blur-3xl pointer-events-none" />
           <img
             src={image}
             alt={imageAlt}
             loading="eager"
             fetchpriority="high"
-            className="relative w-full max-h-[800px] object-contain drop-shadow-2xl"
+            onLoad={() => setIsLoaded(true)}
+            className={`ss-img-content relative w-full max-h-[800px] object-contain drop-shadow-2xl transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         </div>
       </div>
