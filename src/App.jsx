@@ -164,7 +164,6 @@ const Hero = () => {
 // Reusable full-screen scroll section with alternating image placement
 const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, ctaTo, imageOnRight = true }) => {
   const ref = useRef(null);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -228,8 +227,7 @@ const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, c
             alt={imageAlt}
             loading="eager"
             fetchpriority="high"
-            onLoad={() => setIsImageLoaded(true)}
-            className={`relative w-full max-h-[800px] object-contain drop-shadow-2xl transition-opacity duration-700 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className="relative w-full max-h-[800px] object-contain drop-shadow-2xl"
           />
         </div>
       </div>
