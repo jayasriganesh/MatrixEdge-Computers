@@ -63,20 +63,26 @@ const Hero = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.hero-word', {
-        y: 100,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: 'power4.out',
-        delay: 0.2
-      });
-      gsap.from('.hero-sub', {
-        y: 20,
-        opacity: 0,
+      // Pre-hide before first paint to prevent flash
+      gsap.set('.hero-word', { y: 60, opacity: 0, willChange: 'transform, opacity' });
+      gsap.set('.hero-sub', { y: 20, opacity: 0, willChange: 'opacity' });
+
+      gsap.to('.hero-word', {
+        y: 0,
+        opacity: 1,
         duration: 1,
+        stagger: 0.12,
         ease: 'power3.out',
-        delay: 0.8
+        delay: 0.1,
+        clearProps: 'willChange'
+      });
+      gsap.to('.hero-sub', {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.6,
+        clearProps: 'willChange'
       });
     }, containerRef);
     return () => ctx.revert();
@@ -113,32 +119,31 @@ const ScrollSection = ({ image, imageAlt, badge, title, description, ctaLabel, c
     const el = ref.current;
     if (!el) return;
     const ctx = gsap.context(() => {
-      // Entrance animation for text elements
-      gsap.from('.ss-text', {
+      // Entrance animation for text elements — fires once, never reverses
+      gsap.from(el.querySelectorAll('.ss-text'), {
         scrollTrigger: {
           trigger: el,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        x: imageOnRight ? -100 : 100, // Slide in from opposite side of image
-        duration: 1.2,
-        stagger: 0.15,
+        x: imageOnRight ? -60 : 60,
+        duration: 0.9,
+        stagger: 0.1,
         ease: 'power3.out',
       });
 
-      // Entrance animation for image
-      gsap.from('.ss-img', {
+      // Entrance animation for image — fires once, never reverses
+      gsap.from(el.querySelectorAll('.ss-img'), {
         scrollTrigger: {
           trigger: el,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        x: imageOnRight ? 100 : -100, // Slide in from its side
-        scale: 0.9,
-        rotateY: imageOnRight ? -10 : 10,
-        duration: 1.5,
+        x: imageOnRight ? 60 : -60,
+        scale: 0.95,
+        duration: 1,
         ease: 'power2.out',
       });
     }, el);

@@ -19,19 +19,19 @@ const DisplaySection = ({ image, imageAlt, badge, title, description, features, 
         if (!el) return;
         const ctx = gsap.context(() => {
             gsap.from(el.querySelectorAll('.ss-text'), {
-                scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none reverse' },
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
                 opacity: 0,
-                x: imageOnRight ? -80 : 80,
-                duration: 1.2,
-                stagger: 0.15,
+                x: imageOnRight ? -60 : 60,
+                duration: 1,
+                stagger: 0.1,
                 ease: 'power3.out',
             });
             gsap.from(el.querySelectorAll('.ss-img'), {
-                scrollTrigger: { trigger: el, start: 'top 75%', toggleActions: 'play none none reverse' },
+                scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' },
                 opacity: 0,
-                x: imageOnRight ? 80 : -80,
-                scale: 0.92,
-                duration: 1.5,
+                x: imageOnRight ? 60 : -60,
+                scale: 0.95,
+                duration: 1.2,
                 ease: 'power2.out',
             });
         }, el);

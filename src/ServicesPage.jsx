@@ -14,32 +14,31 @@ const ServiceSection = ({ image, imageAlt, badge, title, description, features, 
         const el = ref.current;
         if (!el) return;
         const ctx = gsap.context(() => {
-            // Entrance animation for text elements
-            gsap.from('.ss-text', {
+            // Entrance animation for text elements — fires once
+            gsap.from(el.querySelectorAll('.ss-text'), {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
                 },
                 opacity: 0,
-                x: imageOnRight ? -100 : 100,
-                duration: 1.2,
-                stagger: 0.15,
+                x: imageOnRight ? -60 : 60,
+                duration: 1,
+                stagger: 0.1,
                 ease: 'power3.out',
             });
 
-            // Entrance animation for image
-            gsap.from('.ss-img', {
+            // Entrance animation for image — fires once
+            gsap.from(el.querySelectorAll('.ss-img'), {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 75%',
-                    toggleActions: 'play none none reverse',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
                 },
                 opacity: 0,
-                x: imageOnRight ? 100 : -100,
-                scale: 0.9,
-                rotateY: imageOnRight ? -10 : 10,
-                duration: 1.5,
+                x: imageOnRight ? 60 : -60,
+                scale: 0.95,
+                duration: 1.2,
                 ease: 'power2.out',
             });
         }, el);
