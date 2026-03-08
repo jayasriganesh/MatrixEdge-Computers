@@ -86,10 +86,10 @@ const Hero = () => {
     <section ref={containerRef} className="h-screen flex flex-col items-center justify-center text-center overflow-hidden relative z-10 px-6">
       <div className="max-w-5xl mx-auto z-10">
         <h1 className="text-dynamic-hero text-foreground mb-6 flex flex-wrap justify-center gap-x-4">
-          <span className="hero-word overflow-hidden inline-block text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70">Infrastructure.</span>
+          <span className="hero-word inline-block">Infrastructure.</span>
           <br className="hidden md:block" />
-          <span className="hero-word overflow-hidden inline-block text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70">Integrated.</span>
-          <span className="hero-word overflow-hidden inline-block text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70">Intelligent.</span>
+          <span className="hero-word inline-block">Integrated.</span>
+          <span className="hero-word inline-block">Intelligent.</span>
           <span className="hero-word inline-block text-[#FF9F1B]">InfinityX.</span>
         </h1>
         <p className="hero-sub text-xl md:text-2xl text-foreground/60 max-w-3xl mx-auto mb-12 font-medium tracking-tight">
