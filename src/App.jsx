@@ -71,10 +71,6 @@ const Navbar = () => {
           <div className="hidden md:flex gap-3 items-center">
             <Link to="/contact"
               className="text-[13px] font-medium text-white border border-white/35 px-5 py-2 rounded-full hover:border-white/70 transition-colors duration-200">
-              Request a Demo
-            </Link>
-            <Link to="/contact"
-              className="text-[13px] font-medium bg-white text-[#0f0f0f] px-5 py-2 rounded-full hover:opacity-90 transition-opacity duration-200">
               Get in Touch
             </Link>
           </div>
@@ -95,7 +91,7 @@ const Navbar = () => {
               </Link>
             ))}
             <Link to="/contact" onClick={() => setIsOpen(false)}
-              className="bg-white text-[#0f0f0f] text-sm font-medium px-5 py-3 rounded-full text-center hover:opacity-90 transition-opacity">
+              className="text-white border border-white/35 text-sm font-medium px-5 py-3 rounded-full text-center hover:border-white/70 transition-colors">
               Get in Touch
             </Link>
           </div>

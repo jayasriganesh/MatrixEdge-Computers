@@ -10,10 +10,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="/infinityx-site/images/home_page_final.jpeg" as="image" />
-  <link rel="preload" href="/infinityx-site/images/SmartClass.png" as="image" />
-  <script type="module" crossorigin src="/infinityx-site/assets/index-B2H8iab1.js"></script>
-  <link rel="stylesheet" crossorigin href="/infinityx-site/assets/index-D5qB9S0D.css">
+  <!-- GitHub Pages SPA redirect handler -->
+  <script>
+    (function() {
+      var l = window.location;
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function(s) {
+          return s.replace(/~and~/g, '&');
+        });
+        window.history.replaceState(
+          null, null,
+          l.pathname.slice(0, -1) + decoded[0] +
+          (decoded[1] ? '?' + decoded[1] : '') +
+          l.hash
+        );
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/MatrixEdge-Computers/assets/index-B1wzyC3P.js"></script>
+  <link rel="stylesheet" crossorigin href="/MatrixEdge-Computers/assets/index-B3QJHCRX.css">
 </head>
 
 <body>
