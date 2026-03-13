@@ -1,960 +1,565 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-    Monitor, Cpu, Wifi, Shield, Zap, Star, LayoutTemplate, Server,
-    Mic, Camera, ChevronRight, ArrowRight, CheckCircle2, Minus,
-    MapPin, Phone, Mail, Play, BookOpen, Users, ShieldCheck, Layers,
-    Volume2, MemoryStick, HardDrive, Touchpad, Maximize2, Bot,
-    PenTool, MessageSquare, SlidersHorizontal, Subtitles, Search,
-    ScreenShare, Lightbulb, Network
+  Monitor, Cpu, Wifi, ArrowRight, Check,
+  Phone, Mail, MapPin, Camera, Mic, Bot, PenTool,
+  Lightbulb, MemoryStick, HardDrive, ScreenShare
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const BASE = import.meta.env.BASE_URL;
 
-// ─── IMAGES ──────────────────────────────────────────────────────────────────
-// Value Series: one image per size (all map to ID.jpg — no separate size images)
-const VALUE_IMAGES = {
-    '65"': `${BASE}images/ID.jpg`,
-    '75"': `${BASE}images/ID.jpg`,
-    '86"': `${BASE}images/ID.jpg`,
-};
-const CSERIES_IMAGES = {
-    '65"': `${BASE}images/ID3.jpg`,
-    '75"': `${BASE}images/ID3.jpg`,
-    '86"': `${BASE}images/ID3.jpg`,
-};
-const PRO_IMAGE = `${BASE}images/ID2.png`;
+/* ─── Images ─────────────────────────────────────── */
+const IMG_VALUE  = `${BASE}images/ID.jpg`;
+const IMG_CSERIES = `${BASE}images/ID3.jpg`;
+const IMG_PRO    = `${BASE}images/ID2.png`;
 
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 1 — HERO
-// ═══════════════════════════════════════════════════════════════════════
-const Hero = ({ onExplore, onCompare }) => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.set(['.hero-tag', '.hero-h1', '.hero-body', '.hero-pills', '.hero-btns'], {
-                opacity: 0, y: 40, willChange: 'transform, opacity',
-            });
-            gsap.set('.hero-panel', { opacity: 0, x: 60, scale: 0.95, willChange: 'transform, opacity' });
-
-            const tl = gsap.timeline({ delay: 0.1 });
-            tl.to('.hero-tag', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', clearProps: 'willChange' })
-                .to('.hero-h1', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', clearProps: 'willChange' }, '-=0.4')
-                .to('.hero-body', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', clearProps: 'willChange' }, '-=0.5')
-                .to('.hero-btns', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', clearProps: 'willChange' }, '-=0.4')
-                .to('.hero-pills', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', clearProps: 'willChange' }, '-=0.3')
-                .to('.hero-panel', { opacity: 1, x: 0, scale: 1, duration: 1.2, ease: 'power2.out', clearProps: 'willChange' }, '-=1.1');
-        }, ref);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={ref} className="min-h-[80vh] md:min-h-screen bg-background flex items-center px-6 py-24 md:py-32 overflow-hidden">
-            <div className="max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-11 gap-16 items-center">
-
-                {/* Left: Text (55%) */}
-                <div className="lg:col-span-6 space-y-8">
-                    <span className="hero-tag inline-block text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs md:text-sm">
-                        InfinityX · Interactive Displays
-                    </span>
-
-                    <h1 className="hero-h1 font-display font-extrabold text-6xl md:text-7xl tracking-tighter text-foreground leading-[1.05]">
-                        Interactive Displays.<br />
-                        Built for <span className="text-[#FF9F1B]">Every</span> Classroom.
-                    </h1>
-
-                    <p className="hero-body text-lg md:text-xl text-foreground/60 font-medium max-w-lg leading-relaxed">
-                        Three series. One purpose — transform how teachers teach and
-                        students learn, across every budget and every environment.
-                    </p>
-
-                    <div className="hero-btns flex flex-wrap gap-4">
-                        <button
-                            onClick={onExplore}
-                            className="bg-[#FF9F1B] text-white px-8 py-4 rounded-full font-bold text-base flex items-center gap-2 hover:bg-[#FF9F1B]/90 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#FF9F1B]/20"
-                        >
-                            Explore Series <ArrowRight size={18} />
-                        </button>
-                        <button
-                            onClick={onCompare}
-                            className="bg-transparent text-foreground px-8 py-4 rounded-full font-bold text-base flex items-center gap-2 border border-foreground/20 hover:border-[#FF9F1B] hover:text-[#FF9F1B] transition-all"
-                        >
-                            Compare Panels <ChevronRight size={18} />
-                        </button>
-                    </div>
-
-                    {/* Size pills — static labels */}
-                    <div className="hero-pills flex items-center gap-3">
-                        <span className="text-foreground/40 text-sm font-bold uppercase tracking-widest">Available in</span>
-                        {['65"', '75"', '86"'].map((s, i) => (
-                            <span key={s} className={`px-4 py-1.5 rounded-full text-sm font-bold transition-colors ${i === 1 ? 'bg-[#FF9F1B] text-white' : 'bg-bento text-foreground/60'}`}>
-                                {s}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Right: Panel image (45%) */}
-                <div className="hero-panel relative lg:col-span-5">
-                    <div className="absolute inset-0 -m-16 bg-[#FF9F1B]/8 rounded-full blur-3xl pointer-events-none" />
-                    <img
-                        src={PRO_IMAGE}
-                        alt="InfinityX Interactive Display"
-                        loading="eager"
-                        fetchpriority="high"
-                        className="relative w-full max-h-[700px] object-contain drop-shadow-2xl"
-                    />
-                </div>
-            </div>
-        </section>
-    );
+/* ─── Reusable scroll-reveal ─────────────────────── */
+const useReveal = (sel, opts = {}) => {
+  const { y = 30, x = 0, stagger = 0.1, start = 'top 85%' } = opts;
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.from(el.querySelectorAll(sel), {
+        scrollTrigger: { trigger: el, start, toggleActions: 'play none none none' },
+        opacity: 0, y, x, duration: 0.85, stagger, ease: 'power3.out',
+      });
+    }, el);
+    return () => ctx.revert();
+  }, [sel, y, x, stagger, start]);
+  return ref;
 };
 
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 2 — STICKY SERIES NAV
-// ═══════════════════════════════════════════════════════════════════════
-const SERIES_TABS = [
-    { id: 'value', label: 'VALUE SERIES' },
-    { id: 'cseries', label: 'C-SERIES' },
-    { id: 'pro', label: 'PRO SERIES' },
+const CORE_SPECS = [
+  { label: "Memory", value: "8GB RAM" },
+  { label: "Storage", value: "128GB ROM" },
+  { label: "OS", value: "Android 14" },
+  { label: "Certification", value: "EDLA Certified" },
 ];
 
-const SeriesNav = ({ activeTab, onTabClick, onCompare }) => {
-    return (
-        <div className="sticky top-24 z-40 bg-[#F9F9F9] border-b border-bento/50">
-            <div className="max-w-screen-2xl mx-auto px-6 h-14 flex items-center justify-between">
-                <div className="flex items-center gap-2 md:gap-6">
-                    {SERIES_TABS.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => onTabClick(tab.id)}
-                            className="relative h-14 flex items-center px-2 font-bold text-xs tracking-widest uppercase transition-colors"
-                            style={{ color: activeTab === tab.id ? '#1D1D1F' : 'rgba(29,29,31,0.5)' }}
-                        >
-                            {tab.label}
-                            {activeTab === tab.id && (
-                                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF9F1B] rounded-full" />
-                            )}
-                        </button>
-                    ))}
-                </div>
-                <button
-                    onClick={onCompare}
-                    className="hidden md:flex items-center gap-1 text-[#FF9F1B] font-bold text-xs tracking-widest uppercase hover:gap-2 transition-all"
-                >
-                    Compare All <ChevronRight size={14} />
-                </button>
-            </div>
-        </div>
-    );
-};
-
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 3 — VALUE SERIES
-// ═══════════════════════════════════════════════════════════════════════
-const VALUE_SPECS = [
-    { icon: <Monitor className="w-6 h-6" />, value: '4K UHD', label: 'Anti-Glare Display' },
-    { icon: <Touchpad className="w-6 h-6" />, value: '20-Point', label: 'Multi-Touch Screen' },
-    { icon: <Volume2 className="w-6 h-6" />, value: '20W × 2', label: 'Built-in Speakers' },
-    { icon: <Cpu className="w-6 h-6" />, value: 'Android 14', label: 'Operating System' },
-    { icon: <MemoryStick className="w-6 h-6" />, value: '8GB RAM', label: 'Memory' },
-    { icon: <HardDrive className="w-6 h-6" />, value: '128GB', label: 'Internal Storage' },
+/* ═══════════════════════════════════════════════
+   FEATURE DATA FOR CAROUSEL
+═══════════════════════════════════════════════ */
+const PRO_FEATURES = [
+  {
+    icon: <Bot size={24} />,
+    title: "Integrated AI Engine",
+    desc: "Transform any lesson instantly. The Matrix Pro's onboard AI can draft lesson plans, generate live quizzes, and provide real-time translations without connecting an external PC.",
+    tags: ["Lesson Generation", "Smart Summaries"]
+  },
+  {
+    icon: <Camera size={24} />,
+    title: "50MP AI Camera & 8-Mic",
+    desc: "Crystal clear hybrid meetings with built-in auto-framing tracking and a 15m voice pickup range. Capture everything effortlessly.",
+    tags: ["Auto-Framing", "15m Voice Pickup"]
+  },
+  {
+    icon: <PenTool size={24} />,
+    title: "Zero-Gap Optical Bonding",
+    desc: "Experience pen-on-paper precision with Mohs 9 anti-glare glass and zero-gap optical bonding for the most natural writing experience.",
+    tags: ["Mohs 9 Glass", "Anti-Glare"]
+  },
+  {
+    icon: <Monitor size={24} />,
+    title: "40-Point Multi-Touch",
+    desc: "Collaborate seamlessly with up to 40 simultaneous touch points, turning any presentation into a highly interactive group session.",
+    tags: ["Ultra Responsive", "40-Point Touch"]
+  }
 ];
 
-const VALUE_SIZE_DESC = {
-    '65"': 'Ideal for classrooms of up to 25 students.',
-    '75"': 'Ideal for classrooms of up to 35 students.',
-    '86"': 'Ideal for large halls and lecture theatres.',
-};
-
-const ValueSeries = () => {
-    const [activeSize, setActiveSize] = useState('75"');
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(ref.current.querySelectorAll('.vs-text'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 40, duration: 0.9, stagger: 0.1, ease: 'power3.out',
-            });
-            gsap.from(ref.current.querySelectorAll('.vs-img'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 75%', toggleActions: 'play none none none' },
-                opacity: 0, x: 60, scale: 0.95, duration: 1.2, ease: 'power2.out',
-            });
-            gsap.from(ref.current.querySelectorAll('.vs-card'), {
-                scrollTrigger: { trigger: ref.current.querySelector('.vs-grid'), start: 'top 85%', toggleActions: 'play none none none' },
-                opacity: 0, y: 30, duration: 0.6, stagger: 0.08, ease: 'power3.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section id="value" ref={ref} className="bg-background border-t border-bento/50 py-16 md:py-32 px-6 overflow-hidden">
-            <div className="max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-5 gap-24 items-center">
-
-                {/* Left: Text block */}
-                <div className="lg:col-span-2 space-y-8">
-                    <span className="vs-text block text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs md:text-sm">
-                        Value Series
-                    </span>
-                    <h2 className="vs-text font-display font-bold text-5xl md:text-6xl tracking-tight text-foreground leading-[1.1]">
-                        Smart Learning.<br />Without Compromise.
-                    </h2>
-                    <p className="vs-text text-lg text-foreground/60 font-medium leading-relaxed max-w-md">
-                        Enterprise-grade touch technology and crystal-clear 4K UHD display, engineered to fit every school budget without cutting corners on quality.
-                    </p>
-
-                    {/* Interactive size selector */}
-                    <div className="vs-text space-y-3">
-                        <p className="text-sm font-bold text-foreground/40 uppercase tracking-widest">Select Size</p>
-                        <div className="flex gap-3">
-                            {Object.keys(VALUE_SIZE_DESC).map(size => (
-                                <button
-                                    key={size}
-                                    onClick={() => setActiveSize(size)}
-                                    className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${activeSize === size
-                                        ? 'bg-[#FF9F1B] text-white shadow-md shadow-[#FF9F1B]/20'
-                                        : 'bg-bento text-foreground/60 hover:bg-bento/80'
-                                        }`}
-                                >
-                                    {size}
-                                </button>
-                            ))}
-                        </div>
-                        <p className="text-sm font-medium text-foreground/50 transition-all">{VALUE_SIZE_DESC[activeSize]}</p>
-                    </div>
-
-                    {/* Spec grid */}
-                    <div className="vs-grid grid grid-cols-3 gap-3">
-                        {VALUE_SPECS.map((spec, i) => (
-                            <div key={i} className="vs-card bg-bento rounded-2xl p-4 flex flex-col gap-2 border border-foreground/5 hover:border-[#FF9F1B]/30 transition-colors shadow-sm">
-                                <span className="text-[#FF9F1B]">{spec.icon}</span>
-                                <span className="font-bold text-foreground text-sm leading-tight">{spec.value}</span>
-                                <span className="text-foreground/50 text-xs font-medium">{spec.label}</span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="vs-text">
-                        <Link
-                            to="/contact"
-                            className="inline-flex items-center gap-2 bg-[#FF9F1B] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#FF9F1B]/90 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#FF9F1B]/20"
-                        >
-                            Enquire About Value Series <ArrowRight size={18} />
-                        </Link>
-                    </div>
-                </div>
-
-                {/* Right: Panel image */}
-                <div className="vs-img relative lg:col-span-3">
-                    <div className="absolute inset-0 -m-12 bg-[#FF9F1B]/6 rounded-3xl blur-3xl pointer-events-none" />
-                    <img
-                        key={activeSize}
-                        src={VALUE_IMAGES[activeSize]}
-                        alt="InfinityX Value Series Interactive Display"
-                        loading="eager"
-                        className="relative w-full max-h-[800px] object-contain drop-shadow-2xl transition-opacity duration-300"
-                    />
-                </div>
-            </div>
-        </section>
-    );
-};
-
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 4 — C-SERIES (CORPORATE) — DARK
-// ═══════════════════════════════════════════════════════════════════════
 const CSERIES_FEATURES = [
-    { icon: <Users className="w-5 h-5" />, title: 'Google Workspace Integration', desc: 'Native access to Docs, Sheets, Meet and Drive from the display.' },
-    { icon: <ScreenShare className="w-5 h-5" />, title: 'Wireless Screen Sharing', desc: '4-device simultaneous casting. Zero cables, zero friction.' },
-    { icon: <SlidersHorizontal className="w-5 h-5" />, title: 'Remote Control Management', desc: 'Centrally manage every panel in your building from one dashboard.' },
-    { icon: <LayoutTemplate className="w-5 h-5" />, title: 'Corporate Dashboard', desc: 'Launch boardroom-ready dashboards, schedules, and KPIs instantly.' },
-    { icon: <Wifi className="w-5 h-5" />, title: 'Proximity Sensor', desc: 'Auto-wakes the display when someone enters the room.' },
-    { icon: <Network className="w-5 h-5" />, title: 'Enterprise Sync', desc: 'Syncs with Microsoft 365, Teams, Zoom, and enterprise SSO.' },
+  {
+    icon: <Camera size={24} />,
+    title: "Integrated A/V Communications",
+    desc: "Built-in 12MP ultra-wide camera and 8-array microphone ensure remote participants never miss a beat. Perfect for hybrid classrooms.",
+    tags: ["Wireless Casting", "Workspace Sync"]
+  },
+  {
+    icon: <Wifi size={24} />,
+    title: "Native Cloud Storage",
+    desc: "Access your Google Drive securely right out of the box with EDLA certification and seamless cloud connectivity.",
+    tags: ["Available & Included", "Seamless Access"]
+  },
+  {
+    icon: <Monitor size={24} />,
+    title: "40-Point Multi-Touch",
+    desc: "Engage multiple users at once with pinpoint accuracy, making corporate brainstorming sessions truly collaborative.",
+    tags: ["Fluid Ink", "40-Point Touch"]
+  },
+  {
+    icon: <ScreenShare size={24} />,
+    title: "Simultaneous Screen Sharing",
+    desc: "Share up to 4 devices simultaneously onto the main display, accommodating an array of mobile and desktop operating systems without cables.",
+    tags: ["4-Device Sync", "Zero Cables"]
+  }
 ];
 
-const CSeries = () => {
-    const [activeSize, setActiveSize] = useState('75"');
-    const ref = useRef(null);
+const ECO_FEATURES = [
+  {
+    icon: <Monitor size={24} />,
+    title: "Enterprise-Grade Display",
+    desc: "Experience the power of Matrix Edge at an accessible price point. The Eco Series delivers crystal-clear 4K UHD visuals for active learning.",
+    tags: ["4K UHD", "Anti-Glare"]
+  },
+  {
+    icon: <Mic size={24} />,
+    title: "Optional A/V Upgrades",
+    desc: "Strictly optional modular Camera & Microphone add-ons, allowing you to scale your AV setup entirely based on real needs.",
+    tags: ["Modular", "Cost-Effective"]
+  },
+  {
+    icon: <Cpu size={24} />,
+    title: "Android 14 OS Base",
+    desc: "Future-proof performance out of the box with the latest Android 14 operating system and full EDLA certification.",
+    tags: ["Android 14", "EDLA Certified"]
+  },
+  {
+    icon: <PenTool size={24} />,
+    title: "40-Point Multi-Touch",
+    desc: "Highly responsive 40-point multi-touch for interactive learning environments without breaking the budget.",
+    tags: ["Responsive", "Multi-Touch"]
+  }
+];
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(ref.current.querySelectorAll('.cs-text'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 40, duration: 0.9, stagger: 0.1, ease: 'power3.out',
-            });
-            gsap.from(ref.current.querySelectorAll('.cs-img'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 75%', toggleActions: 'play none none none' },
-                opacity: 0, x: -60, scale: 0.95, duration: 1.2, ease: 'power2.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
+/* ═══════════════════════════════════════════════
+   FEATURE CAROUSEL COMPONENT
+═══════════════════════════════════════════════ */
+const FeatureCarousel = ({ features, badgeColor }) => {
+  const [index, setIndex] = useState(0);
 
-    return (
-        <section id="cseries" ref={ref} className="bg-foreground border-t border-[#FF9F1B]/20 py-16 md:py-32 px-6 overflow-hidden">
-            <div className="max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-5 gap-24 items-center">
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex(prev => (prev + 1) % features.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [features.length]);
 
-                {/* Left: Panel image */}
-                <div className="cs-img relative lg:col-span-3 order-2 lg:order-1">
-                    <div className="absolute inset-0 -m-12 bg-[#FF9F1B]/10 rounded-3xl blur-3xl pointer-events-none" />
-                    <img
-                        src={CSERIES_IMAGES[activeSize]}
-                        alt="InfinityX C-Series Corporate Display"
-                        loading="eager"
-                        className="relative w-full max-h-[800px] object-contain drop-shadow-2xl"
-                    />
-                </div>
+  const activeColorStr = 
+    badgeColor === 'accent' ? 'text-accent' :
+    badgeColor === 'blue' ? 'text-blue-400' :
+    badgeColor === 'yellow' ? 'text-amber-400' :
+    'text-emerald-400';
+    
+  const activeBgStr = 
+    badgeColor === 'accent' ? 'bg-accent/10 border-accent/20' :
+    badgeColor === 'blue' ? 'bg-blue-500/10 border-blue-500/20' :
+    badgeColor === 'yellow' ? 'bg-amber-500/10 border-amber-500/20' :
+    'bg-emerald-500/10 border-emerald-500/20';
 
-                {/* Right: Text block */}
-                <div className="lg:col-span-2 space-y-8 order-1 lg:order-2">
-                    <span className="cs-text inline-flex items-center gap-2 text-white/60 font-bold tracking-[0.2em] uppercase text-xs md:text-sm">
-                        <span className="bg-white/10 px-3 py-1 rounded-full">C-Series · Corporate</span>
-                    </span>
-                    <h2 className="cs-text font-display font-bold text-5xl md:text-6xl tracking-tight text-white leading-[1.1]">
-                        The Boardroom.<br />The Classroom. <span className="text-[#FF9F1B]">Both.</span>
-                    </h2>
-                    <p className="cs-text text-lg text-white/60 font-medium leading-relaxed max-w-md">
-                        Purpose-built for hybrid environments. The C-Series unifies corporate-grade collaboration tools with classroom-ready interactive technology.
-                    </p>
+  const dotActiveStr = 
+    badgeColor === 'accent' ? 'bg-accent' :
+    badgeColor === 'blue' ? 'bg-blue-400' :
+    badgeColor === 'yellow' ? 'bg-amber-400' :
+    'bg-emerald-400';
 
-                    {/* Feature list */}
-                    <ul className="cs-text space-y-5">
-                        {CSERIES_FEATURES.map((f, i) => (
-                            <li key={i} className="flex items-start gap-4">
-                                <span className="text-[#FF9F1B] shrink-0 mt-0.5">{f.icon}</span>
-                                <div>
-                                    <span className="font-bold text-white text-sm block">{f.title}</span>
-                                    <span className="text-white/50 text-sm font-medium">{f.desc}</span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+  const hoverBorderStr = 
+    badgeColor === 'accent' ? 'hover:border-accent/40' :
+    badgeColor === 'blue' ? 'hover:border-blue-500/40' :
+    badgeColor === 'yellow' ? 'hover:border-amber-500/40' :
+    'hover:border-emerald-500/40';
 
-                    {/* Size selector — dark version */}
-                    <div className="cs-text space-y-3">
-                        <p className="text-sm font-bold text-white/40 uppercase tracking-widest">Select Size</p>
-                        <div className="flex gap-3">
-                            {['65"', '75"', '86"'].map(size => (
-                                <button
-                                    key={size}
-                                    onClick={() => setActiveSize(size)}
-                                    className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${activeSize === size
-                                        ? 'bg-[#FF9F1B] text-white shadow-md shadow-[#FF9F1B]/20'
-                                        : 'bg-white/10 text-white hover:bg-white/15'
-                                        }`}
-                                >
-                                    {size}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="cs-text">
-                        <Link
-                            to="/contact"
-                            className="inline-flex items-center gap-2 bg-[#FF9F1B] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#FF9F1B]/90 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#FF9F1B]/20"
-                        >
-                            Enquire About C-Series <ArrowRight size={18} />
-                        </Link>
-                    </div>
-                </div>
+  return (
+    <div className={`col-span-1 md:col-span-2 lg:col-span-3 relative overflow-hidden bg-[#111214] border border-white/5 rounded-2xl group transition-all duration-300 ${hoverBorderStr}`}>
+      <div 
+        className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] h-full w-full" 
+        style={{ transform: `translateX(-${index * 100}%)` }}
+      >
+        {features.map((f, i) => (
+          <div key={i} className="min-w-full w-full flex-shrink-0 p-8 md:p-10 flex flex-col justify-between" style={{ width: '100%' }}>
+            <div>
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 border ${activeBgStr} ${activeColorStr}`}>
+                {f.icon}
+              </div>
+              <h3 className="text-[26px] md:text-[28px] font-bold text-white mb-3 tracking-tight">{f.title}</h3>
+              <p className="text-[15px] md:text-[16px] text-white/60 leading-relaxed mb-8 max-w-[90%] md:max-w-[85%]">
+                {f.desc}
+              </p>
             </div>
-        </section>
-    );
+            <div className="flex gap-2 flex-wrap">
+              {f.tags.map((tag, idx) => (
+                <span key={idx} className="px-3 py-1.5 text-[11px] md:text-[12px] font-medium bg-white/5 border border-white/10 text-white/70 rounded-md shadow-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="absolute top-10 right-10 flex gap-2 z-10">
+        {features.map((_, i) => (
+          <button key={i} onClick={() => setIndex(i)} aria-label={`Go to slide ${i + 1}`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index ? `${dotActiveStr} scale-125` : 'bg-white/20 hover:bg-white/40'}`} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 5 — PRO SERIES
-// ═══════════════════════════════════════════════════════════════════════
-const PRO_HARDWARE_STATS = [
-    { value: '450', unit: 'nits', label: 'Brightness' },
-    { value: '100,000', unit: ':1', label: 'Contrast Ratio' },
-    { value: '< 2', unit: 'ms', label: 'Touch Latency' },
-    { value: '50', unit: 'MP', label: 'AI Camera' },
-    { value: 'Mohs 9', unit: '', label: 'Glass Hardness' },
-    { value: '8', unit: 'GB', label: 'RAM' },
+/* ═══════════════════════════════════════════════
+   1. PAGE HERO
+═══════════════════════════════════════════════ */
+const PageHero = () => {
+  const ref = useReveal('.ph-el', { y: 30 });
+  return (
+    <section ref={ref} className="relative bg-[#0a0a0a] min-h-[40vh] md:min-h-[50vh] flex flex-col items-center justify-center pt-24 pb-12 md:pt-32 md:pb-24 overflow-hidden border-b border-white/5">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none opacity-20"
+        style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%)' }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto w-full px-6 flex flex-col items-center text-center gap-6 mt-16">
+        <div className="ph-el inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[11px] font-medium tracking-wide text-white/80">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+          The Matrix Edge Lineup
+        </div>
+
+        <h1 className="ph-el text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-[1.05] tracking-tight">
+          The future of the classroom.<br className="hidden md:block" />
+          <span className="text-white/40">Found here.</span>
+        </h1>
+
+        <p className="ph-el text-[16px] md:text-[18px] text-white/60 leading-[1.6] max-w-2xl mx-auto font-medium mb-8">
+          Three powerful interactive series. One unified ecosystem. Engineered to transform learning outcomes across every budget and environment.
+        </p>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════
+   SHARED SERIES SECTION WRAPPER
+═══════════════════════════════════════════════ */
+const SeriesSection = ({ id, badge, title, subtitle, img, badgeColor = "accent", children }) => {
+  const ref = useReveal('.sec-el', { y: 30 });
+  
+  const badgeColors = {
+    accent: "bg-accent/10 border-accent/20 text-accent",
+    white: "bg-white/5 border-white/10 text-white/80",
+    green: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
+    blue: "bg-blue-500/10 border-blue-500/20 text-blue-400",
+    yellow: "bg-amber-500/10 border-amber-500/20 text-amber-400",
+  };
+  
+  const markerColors = {
+    accent: "bg-accent animate-pulse",
+    white: "bg-white/50",
+    green: "bg-emerald-400 animate-pulse",
+    blue: "bg-blue-400 animate-pulse",
+    yellow: "bg-amber-400 animate-pulse",
+  };
+  
+  const markerColor = markerColors[badgeColor] || "bg-white/50";
+
+  return (
+    <section id={id} ref={ref} className="bg-[#0a0a0a] border-b border-white/5 py-16 md:py-32 px-6">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
+        
+        {/* Stage 1: The Reveal */}
+        <div className="sec-el flex flex-col items-center text-center mb-16">
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md border text-[11px] font-bold tracking-widest uppercase mb-6 ${badgeColors[badgeColor]}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${markerColor}`} />
+            {badge}
+          </div>
+          <h2 className="text-[48px] md:text-[64px] font-bold text-white tracking-tight leading-none mb-4">
+            {title}
+          </h2>
+          <p className="text-[18px] md:text-[22px] text-white/50 font-medium text-center max-w-2xl">
+            {subtitle}
+          </p>
+        </div>
+
+        <div className="sec-el relative w-full mb-10 md:mb-24 flex justify-center">
+          <div className="absolute inset-x-0 bottom-[-20%] h-[50%] bg-gradient-to-t from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+          <img src={img} alt={title} className="w-full object-contain max-h-[700px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.8)] mx-auto relative z-10" />
+        </div>
+
+        {/* Stage 2: The Grid With Carousel */}
+        <div className="sec-el w-full">
+          {children}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════
+   2. PRO SERIES
+═══════════════════════════════════════════════ */
+const ProSeriesDeepDive = () => (
+  <SeriesSection id="pro" badge="Flagship" title="Pro Series." subtitle="The ultimate teaching engine." img={IMG_PRO} badgeColor="yellow">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      {/* Dynamic Feature Slider (takes 3 columns) */}
+      <FeatureCarousel features={PRO_FEATURES} badgeColor="yellow" />
+
+      {/* Hardware Specs List (takes 1 column) */}
+      <div className="bg-[#111214] border border-white/5 rounded-2xl p-8 flex flex-col justify-between h-[360px] lg:h-auto">
+        <div>
+          <h3 className="text-[18px] font-bold text-white mb-6">Core Hardware</h3>
+          <div className="flex flex-col gap-4">
+            {CORE_SPECS.map((spec, i) => (
+              <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                <span className="text-[14px] text-white/50">{spec.label}</span>
+                <span className="text-[14px] font-bold text-white">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </SeriesSection>
+);
+
+/* ═══════════════════════════════════════════════
+   3. C-SERIES
+═══════════════════════════════════════════════ */
+const CSeriesDeepDive = () => (
+  <SeriesSection id="cseries" badge="Corporate & Classroom Hybrid" title="C-Series." subtitle="The versatile workhorse. Engineered for environments that demand flexibility." img={IMG_CSERIES} badgeColor="blue">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      {/* Dynamic Feature Slider (takes 3 columns) */}
+      <FeatureCarousel features={CSERIES_FEATURES} badgeColor="blue" />
+
+      {/* Hardware Specs List (takes 1 column) */}
+      <div className="bg-[#111214] border border-white/5 rounded-2xl p-8 flex flex-col justify-between h-[360px] lg:h-auto">
+        <div>
+          <h3 className="text-[18px] font-bold text-white mb-6">Core Hardware</h3>
+          <div className="flex flex-col gap-4">
+            {CORE_SPECS.map((spec, i) => (
+              <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                <span className="text-[14px] text-white/50">{spec.label}</span>
+                <span className="text-[14px] font-bold text-white">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </SeriesSection>
+);
+
+/* ═══════════════════════════════════════════════
+   4. ECO SERIES
+═══════════════════════════════════════════════ */
+const EcoSeriesDeepDive = () => (
+  <SeriesSection id="eco" badge="Value without compromise" title="Eco Series." subtitle="Experience the power of Matrix Edge at an accessible price point with essential smart tools." img={IMG_VALUE} badgeColor="green">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      {/* Dynamic Feature Slider (takes 3 columns) */}
+      <FeatureCarousel features={ECO_FEATURES} badgeColor="green" />
+
+      {/* Hardware Specs List (takes 1 column) */}
+      <div className="bg-[#111214] border border-white/5 rounded-2xl p-8 flex flex-col justify-between h-[360px] lg:h-auto">
+        <div>
+          <h3 className="text-[18px] font-bold text-white mb-6">Core Hardware</h3>
+          <div className="flex flex-col gap-4">
+            {CORE_SPECS.map((spec, i) => (
+              <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                <span className="text-[14px] text-white/50">{spec.label}</span>
+                <span className="text-[14px] font-bold text-white">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </SeriesSection>
+);
+
+
+/* ═══════════════════════════════════════════════
+   5. COMPARISON MATRIX (DARK MODE)
+═══════════════════════════════════════════════ */
+const COMP_ROWS = [
+  { label: 'Operating System', eco: 'Android 14', c: 'Android 14', pro: 'Android 14' },
+  { label: 'EDLA Certification', eco: 'Supported', c: 'Supported', pro: 'Supported' },
+  { label: 'RAM', eco: '8GB', c: '8GB', pro: '8GB' },
+  { label: 'Storage', eco: '128GB', c: '128GB', pro: '128GB' },
+  { label: 'AI Engine', eco: 'Integrated', c: 'Integrated', pro: 'Integrated' },
+  { label: 'Camera / Mic', eco: 'Optional Add-on', c: 'Included (12MP/8-Mic)', pro: 'Included (50MP/8-Mic)' },
+  { label: 'Cloud Storage', eco: '-', c: 'Available', pro: 'Available' },
+  { label: 'Multi-Touch', eco: '40-Point', c: '40-Point', pro: '40-Point' },
+  { label: 'Display Bonding', eco: 'Standard', c: 'Standard', pro: 'Zero-Gap Optical' },
 ];
 
-const PRO_AI_FEATURES = [
-    { icon: <PenTool className="w-5 h-5" />, title: 'AI Whiteboard', desc: 'Infinite canvas with AI sketch-to-shape and auto-cleanup.' },
-    { icon: <Bot className="w-5 h-5" />, title: 'AI Lesson Planning', desc: '5E-structured lesson plans generated instantly from a topic.' },
-    { icon: <MessageSquare className="w-5 h-5" />, title: 'AI Q&A', desc: 'Students ask questions in real-time; AI surfaces context-aware answers.' },
-    { icon: <Camera className="w-5 h-5" />, title: 'AI Camera', desc: '50MP with auto-framing, engagement tracking, and behavior AI.' },
-    { icon: <Mic className="w-5 h-5" />, title: 'AI Voice Assistant', desc: '8-array mic system with noise cancellation and voice commands.' },
-    { icon: <Lightbulb className="w-5 h-5" />, title: 'AI Summarization', desc: 'Condense PDFs (100pg) and videos into key takeaways in seconds.' },
-    { icon: <Search className="w-5 h-5" />, title: 'AI Search', desc: 'Context-aware smart search across the lesson board and apps.' },
-    { icon: <Maximize2 className="w-5 h-5" />, title: 'AI Screen Adaptation', desc: 'Automatically adjusts layout for most effective viewing.' },
-];
+const ComparisonTable = () => {
+  const ref = useReveal('tr', { y: 15, stagger: 0.05 });
+  return (
+    <section ref={ref} className="bg-[#0a0a0a] py-16 md:py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-[32px] md:text-[40px] font-bold text-white tracking-tight">Technical Matrix.</h2>
+          <p className="text-[15px] md:text-[17px] text-white/50 mt-2">Compare specifications across the lineup.</p>
+        </div>
 
-const ProSeries = () => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(ref.current.querySelectorAll('.pro-text'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 40, duration: 0.9, stagger: 0.08, ease: 'power3.out',
-            });
-            gsap.from(ref.current.querySelectorAll('.pro-img'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 75%', toggleActions: 'play none none none' },
-                opacity: 0, scale: 0.9, duration: 1.2, ease: 'power2.out',
-            });
-            gsap.from(ref.current.querySelectorAll('.pro-stat'), {
-                scrollTrigger: { trigger: ref.current.querySelector('.pro-stats'), start: 'top 85%', toggleActions: 'play none none none' },
-                opacity: 0, y: 20, duration: 0.6, stagger: 0.07, ease: 'power3.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section id="pro" ref={ref} className="py-16 md:py-32 px-6 bg-background border-t border-bento/50 overflow-hidden relative">
-            {/* Atmospheric orange blurs */}
-            <div className="absolute top-0 left-0 w-96 h-96 bg-[#FF9F1B]/8 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#FF9F1B]/8 rounded-full blur-3xl pointer-events-none translate-x-1/2 translate-y-1/2" />
-
-            <div className="max-w-screen-2xl mx-auto relative z-10">
-                {/* Header */}
-                <div className="text-center mb-20 space-y-4">
-                    <div className="flex items-center justify-center gap-3 flex-wrap">
-                        <span className="pro-text text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs">PRO SERIES</span>
-                        <div className="flex gap-2">
-                            {['MOHS 9', '50MP', '4K', 'AI'].map(tag => (
-                                <span key={tag} className="px-3 py-1 bg-bento rounded-full text-xs font-bold text-foreground/50 tracking-wider">{tag}</span>
-                            ))}
-                        </div>
-                    </div>
-                    <h2 className="pro-text font-display font-extrabold text-6xl md:text-7xl tracking-tighter text-foreground leading-[1.05]">
-                        The Pro Series.<br /><span className="text-[#FF9F1B]">Nothing</span> Held Back.
-                    </h2>
-                    <p className="pro-text text-xl text-foreground/60 font-medium max-w-2xl mx-auto leading-relaxed">
-                        The EyeRIS A10 Pro is the most advanced interactive display we offer — a fully integrated AI teaching engine built for the classrooms of tomorrow.
-                    </p>
-                </div>
-
-                {/* Triple column: Hardware | Panel | AI */}
-                <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 lg:gap-8 items-center">
-
-                    {/* Left: Hardware stats */}
-                    <div className="pro-stats lg:col-span-3 space-y-6">
-                        <p className="pro-text text-xs font-bold uppercase tracking-widest text-foreground/40 mb-6">Hardware Specs</p>
-                        {PRO_HARDWARE_STATS.map((s, i) => (
-                            <div key={i} className="pro-stat border-b border-bento/80 pb-5 last:border-0">
-                                <div className="flex items-baseline gap-1">
-                                    <span className="font-display font-bold text-3xl text-foreground">{s.value}</span>
-                                    <span className="font-bold text-[#FF9F1B] text-lg">{s.unit}</span>
-                                </div>
-                                <span className="text-foreground/50 text-sm font-medium">{s.label}</span>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Center: Panel image */}
-                    <div className="pro-img relative lg:col-span-5 flex flex-col items-center gap-8">
-                        <div className="absolute inset-0 bg-[#FF9F1B]/6 rounded-3xl blur-3xl pointer-events-none" />
-                        <img
-                            src={PRO_IMAGE}
-                            alt="EyeRIS A10 Pro Interactive Display"
-                            loading="eager"
-                            className="relative w-full max-h-[700px] object-contain drop-shadow-2xl"
-                        />
-                        {/* Size selector below panel */}
-                        <div className="relative z-10 flex flex-col items-center gap-3">
-                            <p className="text-xs font-bold text-foreground/40 uppercase tracking-widest">Available Sizes</p>
-                            <div className="flex gap-3">
-                                {['65"', '75"', '86"'].map((size, i) => (
-                                    <span key={size} className={`px-5 py-2 rounded-full font-bold text-sm ${i === 1 ? 'bg-[#FF9F1B] text-white' : 'bg-bento text-foreground/60'}`}>
-                                        {size}
-                                    </span>
-                                ))}
-                            </div>
-                            <p className="text-foreground/40 text-xs font-medium text-center mt-1">
-                                Mohs 9 Glass · Android 14 · 8GB RAM · 128GB + Unlimited Cloud · 3-Year Onsite Warranty
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Right: AI features */}
-                    <div className="lg:col-span-3 space-y-5">
-                        <p className="pro-text text-xs font-bold uppercase tracking-widest text-foreground/40 mb-6">AI Features</p>
-                        {PRO_AI_FEATURES.map((f, i) => (
-                            <div key={i} className="pro-text flex items-start gap-3">
-                                <span className="text-[#FF9F1B] shrink-0 mt-0.5">{f.icon}</span>
-                                <div>
-                                    <span className="font-bold text-foreground text-sm block">{f.title}</span>
-                                    <span className="text-foreground/50 text-xs font-medium leading-relaxed">{f.desc}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* CTA */}
-                <div className="text-center mt-20">
-                    <Link
-                        to="/contact"
-                        className="inline-flex items-center gap-2 bg-[#FF9F1B] text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-[#FF9F1B]/90 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#FF9F1B]/20"
-                    >
-                        Enquire About Pro Series <ArrowRight size={20} />
-                    </Link>
-                </div>
-            </div>
-        </section>
-    );
+        <div className="bg-[#111214] rounded-2xl border border-white/5 overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px]">
+            <thead>
+              <tr className="border-b border-white/10 uppercase tracking-widest text-[11px] font-bold text-white/50 bg-[#0a0a0a]/50">
+                <th className="py-6 px-6 font-medium">Feature Matrix</th>
+                <th className="py-6 px-6 font-medium text-white">Eco Series</th>
+                <th className="py-6 px-6 font-medium text-white">C-Series</th>
+                <th className="py-6 px-6 font-medium text-white">Pro Series</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMP_ROWS.map((r, i) => (
+                <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors duration-150 group">
+                  <td className="py-5 px-6 text-[14px] font-medium text-white/60 group-hover:text-white/90">{r.label}</td>
+                  <td className="py-5 px-6 text-[14px] font-bold text-white">{r.eco}</td>
+                  <td className="py-5 px-6 text-[14px] font-bold text-white">{r.c}</td>
+                  <td className="py-5 px-6 text-[14px] font-bold text-white">{r.pro}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 6 — COMPARISON TABLE
-// ═══════════════════════════════════════════════════════════════════════
-const COMPARISON_ROWS = [
-    { feature: 'Display', value: '4K UHD, 350 nits', cseries: '4K UHD, 400 nits', pro: '4K UHD, 450 nits, 1.07B Colors' },
-    { feature: 'OS', value: 'Android 14', cseries: 'Android 13', pro: 'Android 14 (EDLA Certified)' },
-    { feature: 'Processor', value: 'Quad Core', cseries: 'Quad Core', pro: 'Octa Core A311D2' },
-    { feature: 'RAM / Storage', value: '4GB / 32GB', cseries: '8GB / 64GB', pro: '8GB / 128GB + Unlimited Cloud' },
-    { feature: 'Touch', value: '20-Point IR', cseries: '40-Point Precision', pro: 'Optical Touch < 2ms, ±0.3mm' },
-    { feature: 'Glass', value: '7H Tempered', cseries: '7H Anti-glare', pro: 'Mohs Level 9 (Zero Gap Bonding)' },
-    { feature: 'Built-in Camera', value: null, cseries: '12MP AI auto-framing', pro: '50MP Built-in AI Camera' },
-    { feature: 'Microphone', value: null, cseries: '8-Array Mic', pro: '8-Array Noise-Cancel Mic' },
-    { feature: 'Google EDLA', value: null, cseries: '✓ Certified', pro: '✓ Certified' },
-    { feature: 'AI Suite', value: 'Basic', cseries: 'Standard', pro: 'Full AI Engine (8 Capabilities)' },
-    { feature: 'Warranty', value: '1-Year Carry-in', cseries: '2-Year Onsite', pro: '3-Year Onsite (Zero Downtime)' },
-];
-
-const ComparisonTable = ({ tableRef }) => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(ref.current.querySelectorAll('.ct-fade'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 40, duration: 0.9, stagger: 0.1, ease: 'power3.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section id="compare" ref={(el) => { ref.current = el; if (tableRef) tableRef.current = el; }} className="py-16 md:py-32 px-6 bg-[#F9F9F9] border-t border-bento/50">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16 ct-fade">
-                    <span className="text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Side-by-Side</span>
-                    <h2 className="font-display font-bold text-5xl tracking-tight text-foreground mb-4">Compare the Series.</h2>
-                    <p className="text-xl text-foreground/60 font-medium">Find the right panel for your space, side by side.</p>
-                </div>
-
-                <div className="ct-fade overflow-x-auto rounded-3xl border border-foreground/10 shadow-xl">
-                    <table className="w-full text-left border-collapse min-w-[680px]">
-                        <thead>
-                            <tr>
-                                <th className="p-5 bg-background border-b border-foreground/10 font-bold text-foreground/40 uppercase tracking-widest text-xs w-1/4">Specification</th>
-                                <th className="p-5 bg-background border-b border-foreground/10 text-center">
-                                    <span className="text-foreground/40 text-xs uppercase tracking-widest block mb-1">Eco</span>
-                                    <span className="font-bold text-foreground text-sm">Value Series</span>
-                                </th>
-                                <th className="p-5 bg-background border-b border-foreground/10 text-center">
-                                    <span className="text-foreground/40 text-xs uppercase tracking-widest block mb-1">Corporate</span>
-                                    <span className="font-bold text-foreground text-sm">C-Series</span>
-                                </th>
-                                {/* Pro column — highlighted */}
-                                <th className="p-5 bg-[#FF9F1B]/8 border-b border-[#FF9F1B]/20 text-center relative">
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FF9F1B] text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">MOST ADVANCED</span>
-                                    <span className="text-[#FF9F1B] text-xs uppercase tracking-widest block mb-1 mt-2">Flagship</span>
-                                    <span className="font-bold text-foreground text-sm">Pro Series</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="text-sm font-medium">
-                            {COMPARISON_ROWS.map((row, i) => (
-                                <tr
-                                    key={i}
-                                    className={`border-b border-foreground/5 last:border-0 group hover:bg-[#FF9F1B]/5 transition-colors ${i % 2 === 0 ? 'bg-background' : 'bg-bento/40'}`}
-                                >
-                                    <td className="p-5 font-bold text-foreground/50 text-xs uppercase tracking-wide">{row.feature}</td>
-                                    <td className="p-5 text-center text-foreground/70">
-                                        {row.value ? row.value : <Minus className="w-4 h-4 text-foreground/20 mx-auto" />}
-                                    </td>
-                                    <td className="p-5 text-center text-foreground/70">
-                                        {row.cseries ? row.cseries : <Minus className="w-4 h-4 text-foreground/20 mx-auto" />}
-                                    </td>
-                                    <td className="p-5 text-center bg-[#FF9F1B]/5 font-semibold text-foreground border-x border-[#FF9F1B]/10">
-                                        {row.pro}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Bottom CTA card */}
-                <div className="ct-fade mt-8 rounded-3xl bg-bento border border-foreground/5 p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-                    <div>
-                        <p className="font-bold text-foreground text-lg mb-1">Not sure which series fits you?</p>
-                        <p className="text-foreground/60 font-medium">Let our team help you pick the right panel for your space.</p>
-                    </div>
-                    <Link
-                        to="/contact"
-                        className="shrink-0 bg-[#FF9F1B] text-white px-8 py-4 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-[#FF9F1B]/90 hover:scale-105 transition-all shadow-lg shadow-[#FF9F1B]/20 whitespace-nowrap"
-                    >
-                        Get Expert Advice <ChevronRight size={16} />
-                    </Link>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 7 — STATS STRIP (DARK)
-// ═══════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   6. STATS STRIP & ENQUIRY FORM
+═══════════════════════════════════════════════ */
 const STATS = [
-    { target: 500, suffix: '+', label: 'Installations' },
-    { target: 200, suffix: '+', label: 'Schools Served' },
-    { target: 50000, suffix: '+', label: 'Students Impacted' },
-    { target: 3, suffix: ' Year', label: 'Onsite Warranty' },
+  { label: 'Touch Points', suffix: 'V', full: '40V' },
+  { label: 'Lifespan (Hrs)', suffix: 'K', full: '50K' },
+  { label: 'OS Version', suffix: '', full: '14' },
+  { label: 'Guarantee (Yrs)', suffix: '', full: '05' },
 ];
 
 const StatsStrip = () => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            STATS.forEach((stat, i) => {
-                const el = ref.current?.querySelector(`#stat-val-${i}`);
-                if (!el) return;
-                const counter = { val: 0 };
-                gsap.to(counter, {
-                    val: stat.target,
-                    duration: 2,
-                    ease: 'power2.out',
-                    snap: { val: 1 },
-                    scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                    onUpdate: () => {
-                        el.textContent = counter.val.toLocaleString() + stat.suffix;
-                    },
-                    onStart: () => { el.textContent = '0' + stat.suffix; }
-                });
-            });
-            gsap.from(ref.current.querySelectorAll('.stat-label'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 20, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={ref} className="py-12 md:py-24 bg-foreground border-t border-[#FF9F1B]/10">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
-                    {STATS.map((stat, i) => (
-                        <div key={i} className={`flex flex-col items-center text-center py-8 px-4 ${i < STATS.length - 1 ? 'border-r border-white/10' : ''}`}>
-                            <span
-                                id={`stat-val-${i}`}
-                                className="font-display font-extrabold text-5xl md:text-6xl text-[#FF9F1B] mb-3"
-                            >
-                                0{stat.suffix}
-                            </span>
-                            <span className="stat-label text-white/50 text-xs uppercase tracking-widest font-bold">{stat.label}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+  const ref = useReveal('.stat-lbl', { y: 20 });
+  return (
+    <section ref={ref} className="bg-[#0a0a0a] border-t border-b border-white/5 py-8">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4">
+        {STATS.map((s, i) => (
+          <div key={i} className={`flex flex-col items-center text-center py-10 px-4 ${i < STATS.length - 1 ? 'border-r border-white/10' : ''}`}>
+            <span className="text-[2.5rem] font-bold text-white leading-none">{s.full}</span>
+            <span className="stat-lbl text-[11px] font-medium text-white/50 mt-2 uppercase tracking-wider">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
-
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 8 — ENQUIRY FORM
-// ═══════════════════════════════════════════════════════════════════════
 const EnquiryForm = () => {
-    const [selectedSeries, setSelectedSeries] = useState('Pro Series');
-    const [selectedSize, setSelectedSize] = useState('75"');
-    const [status, setStatus] = useState('');
-    const ref = useRef(null);
+  const [series, setSeries] = useState('Pro Series');
+  const [size, setSize] = useState('75"');
+  const [status, setStatus] = useState('');
+  
+  const submit = (e) => {
+    e.preventDefault();
+    setStatus('Request received. We will contact you soon.');
+    setTimeout(() => setStatus(''), 4000);
+  };
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(ref.current.querySelectorAll('.ef-fade'), {
-                scrollTrigger: { trigger: ref.current, start: 'top 80%', toggleActions: 'play none none none' },
-                opacity: 0, y: 40, duration: 0.9, stagger: 0.1, ease: 'power3.out',
-            });
-        }, ref);
-        return () => ctx.revert();
-    }, []);
+  const inputClass = "w-full bg-[#111214] border border-white/10 rounded-md px-4 py-3.5 text-[14px] text-white focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/30 transition-all placeholder:text-white/20";
+  const labelClass = "block text-[12px] font-semibold text-white/60 mb-2 mt-4 uppercase tracking-wider";
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setStatus('Sending...');
-        setTimeout(() => {
-            setStatus('Request sent! We\'ll contact you shortly.');
-            setTimeout(() => setStatus(''), 4000);
-        }, 1500);
-    };
+  return (
+    <section className="bg-[#0a0a0a] py-16 md:py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
+          <div className="lg:col-span-2 flex flex-col justify-center">
+            <h2 className="text-[32px] md:text-[40px] font-bold text-white tracking-tight leading-[1.1] mb-6">Experience the difference.</h2>
+            <p className="text-[15px] text-white/60 leading-relaxed mb-8">
+              Matrix Edge interactive displays are trusted by cutting-edge institutions. Request a live demonstration or get a customized quote for your environment today.
+            </p>
+            <div className="flex flex-col gap-5 text-[14px] text-white/70">
+              <div className="flex items-center gap-4"><Phone size={18} className="text-accent" /> +91 91548 40989</div>
+              <div className="flex items-center gap-4"><Mail size={18} className="text-accent" /> contact@infinitx.in</div>
+              <div className="flex items-start gap-4"><MapPin size={18} className="text-accent mt-1 shrink-0" /> Hyderabad, Telangana, India</div>
+            </div>
+          </div>
 
-    const seriesOptions = ['Value Series', 'C-Series', 'Pro Series'];
-    const sizeOptions = ['65"', '75"', '86"'];
-
-    return (
-        <section id="enquiry" ref={ref} className="py-16 md:py-32 px-6 bg-background border-t border-bento/50">
-            <div className="max-w-6xl mx-auto">
-                <div className="ef-fade rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row">
-
-                    {/* Left: Dark panel */}
-                    <div className="lg:w-2/5 bg-foreground p-10 md:p-14 flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF9F1B]/10 rounded-full blur-3xl pointer-events-none" />
-                        <div className="relative z-10">
-                            <span className="text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs block mb-6">Get a Demo</span>
-                            <h3 className="font-display font-bold text-3xl md:text-4xl text-white leading-tight mb-4">
-                                Get a Demo at<br />Your School.
-                            </h3>
-                            <p className="text-white/60 font-medium mb-10 leading-relaxed">
-                                Our enterprise team will arrange a live demonstration at your institution, tailored to your specific needs.
-                            </p>
-
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
-                                        <Phone className="w-4 h-4 text-[#FF9F1B]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white font-bold text-sm">+91 9292252880</p>
-                                        <p className="text-white/40 text-xs font-medium">Mon–Sat, 9am–6pm IST</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
-                                        <Mail className="w-4 h-4 text-[#FF9F1B]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white font-bold text-sm">matrixedgevij@gmail.com</p>
-                                        <p className="text-white/40 text-xs font-medium">Response within 4 hours</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
-                                        <MapPin className="w-4 h-4 text-[#FF9F1B]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white font-bold text-sm">Vijayawada, Andhra Pradesh</p>
-                                        <p className="text-white/40 text-xs font-medium">APIIC Industrial Area, C4/110</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Series tier indicators */}
-                        <div className="relative z-10 mt-12 flex items-center gap-4">
-                            <div className="flex items-center gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-[#FF9F1B]" />
-                                <span className="text-white/40 text-xs font-bold">Value</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-blue-400" />
-                                <span className="text-white/40 text-xs font-bold">C-Series</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-violet-400" />
-                                <span className="text-white/40 text-xs font-bold">Pro</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right: Form */}
-                    <div className="lg:w-3/5 bg-[#F9F9F9] p-10 md:p-14">
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">First Name</label>
-                                    <input type="text" required placeholder="Jane"
-                                        className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Last Name</label>
-                                    <input type="text" required placeholder="Doe"
-                                        className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Email Address</label>
-                                    <input type="email" required placeholder="jane@school.edu"
-                                        className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Phone</label>
-                                    <input type="tel" required placeholder="+91 90000 00000"
-                                        className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Organization / School Name</label>
-                                <input type="text" placeholder="Greenfield High School"
-                                    className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm" />
-                            </div>
-
-                            {/* Series selector */}
-                            <div>
-                                <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Interested Series</label>
-                                <div className="flex flex-wrap gap-3">
-                                    {seriesOptions.map(s => (
-                                        <button
-                                            key={s}
-                                            type="button"
-                                            onClick={() => setSelectedSeries(s)}
-                                            className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${selectedSeries === s
-                                                ? 'bg-[#FF9F1B] text-white shadow-md shadow-[#FF9F1B]/20'
-                                                : 'bg-bento text-foreground/60 hover:bg-bento/60'
-                                                }`}
-                                        >
-                                            {s}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Size selector */}
-                            <div>
-                                <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Panel Size</label>
-                                <div className="flex gap-3">
-                                    {sizeOptions.map(s => (
-                                        <button
-                                            key={s}
-                                            type="button"
-                                            onClick={() => setSelectedSize(s)}
-                                            className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${selectedSize === s
-                                                ? 'bg-[#FF9F1B] text-white shadow-md shadow-[#FF9F1B]/20'
-                                                : 'bg-bento text-foreground/60 hover:bg-bento/60'
-                                                }`}
-                                        >
-                                            {s}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-xs font-bold text-foreground/60 mb-2 uppercase tracking-wide">Message (Optional)</label>
-                                <textarea
-                                    rows={3}
-                                    placeholder="Any specific requirements or questions?"
-                                    className="w-full bg-background border border-foreground/10 rounded-xl px-5 py-3.5 outline-none focus:border-[#FF9F1B] focus:ring-1 focus:ring-[#FF9F1B]/20 transition-all text-foreground placeholder:text-foreground/30 font-medium text-sm resize-none"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={status !== ''}
-                                className={`w-full font-bold px-8 py-4 rounded-full transition-all shadow-lg flex items-center justify-center gap-2 text-sm ${status === ''
-                                    ? 'bg-[#FF9F1B] text-white hover:bg-[#FF9F1B]/90 hover:scale-[1.02] shadow-[#FF9F1B]/20'
-                                    : status.includes('sent')
-                                        ? 'bg-green-500 text-white cursor-default'
-                                        : 'bg-[#FF9F1B]/50 text-white cursor-wait'
-                                    }`}
-                            >
-                                {status || 'Request a Demo'}
-                            </button>
-                        </form>
-                    </div>
+          <div className="lg:col-span-3 bg-[#111214] p-8 md:p-10 rounded-2xl border border-white/5">
+            <form onSubmit={submit} className="flex flex-col gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Full Name</label>
+                  <input required type="text" placeholder="John Doe" className={inputClass} />
                 </div>
-            </div>
-        </section>
-    );
-};
+                <div>
+                  <label className={labelClass}>Email Address</label>
+                  <input required type="email" placeholder="john@institution.edu" className={inputClass} />
+                </div>
+              </div>
 
+              <div>
+                <label className={labelClass}>Interested Series</label>
+                <div className="flex flex-wrap gap-2">
+                  {['Eco Series', 'C-Series', 'Pro Series'].map(s => (
+                    <button type="button" key={s} onClick={() => setSeries(s)}
+                      className={`px-4 py-2 rounded-md text-[13px] font-medium transition-colors duration-200 border ${series === s
+                        ? 'bg-white text-black border-white'
+                        : 'border-white/10 text-white/60 hover:bg-white/5'}`}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-// ═══════════════════════════════════════════════════════════════════════
-// ROOT — ProductsPage
-// ═══════════════════════════════════════════════════════════════════════
-const ProductsPage = () => {
-    const [activeTab, setActiveTab] = useState('value');
-    const tableRef = useRef(null);
+              <div>
+                <label className={labelClass}>Panel Size</label>
+                <div className="flex gap-2">
+                  {['65"', '75"', '86"'].map(s => (
+                    <button type="button" key={s} onClick={() => setSize(s)}
+                      className={`px-4 py-2 rounded-md text-[13px] font-medium transition-colors duration-200 border ${size === s
+                        ? 'bg-white text-black border-white'
+                        : 'border-white/10 text-white/60 hover:bg-white/5'}`}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-    // Section refs for scroll spy + tab click
-    const sectionRefs = {
-        value: useRef(null),
-        cseries: useRef(null),
-        pro: useRef(null),
-    };
+              <div>
+                <label className={labelClass}>Message (optional)</label>
+                <textarea rows={3} placeholder="Tell us about your institution and requirements..." className={`${inputClass} resize-none`} />
+              </div>
 
-    // Scroll spy via IntersectionObserver
-    useEffect(() => {
-        const observers = [];
-        Object.entries(sectionRefs).forEach(([id, ref]) => {
-            if (!ref.current) return;
-            const obs = new IntersectionObserver(
-                ([entry]) => { if (entry.isIntersecting) setActiveTab(id); },
-                { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
-            );
-            obs.observe(ref.current);
-            observers.push(obs);
-        });
-        return () => observers.forEach(o => o.disconnect());
-    }, []);
-
-    const scrollTo = (id) => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setActiveTab(id === 'compare' ? activeTab : id);
-    };
-
-    const scrollToCompare = () => {
-        if (tableRef.current) tableRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    return (
-        <div className="bg-background min-h-screen text-foreground selection:bg-[#FF9F1B]/20 selection:text-[#FF9F1B]">
-            {/* S1: Hero */}
-            <Hero onExplore={() => scrollTo('value')} onCompare={scrollToCompare} />
-
-            {/* S2: Sticky series nav */}
-            <SeriesNav
-                activeTab={activeTab}
-                onTabClick={(id) => scrollTo(id)}
-                onCompare={scrollToCompare}
-            />
-
-            {/* S3: Value Series */}
-            <div ref={sectionRefs.value}>
-                <ValueSeries />
-            </div>
-
-            {/* S4: C-Series */}
-            <div ref={sectionRefs.cseries}>
-                <CSeries />
-            </div>
-
-            {/* S5: Pro Series */}
-            <div ref={sectionRefs.pro}>
-                <ProSeries />
-            </div>
-
-            {/* S6: Comparison Table */}
-            <ComparisonTable tableRef={tableRef} />
-
-            {/* S7: Stats Strip */}
-            <StatsStrip />
-
-            {/* S8: Enquiry Form */}
-            <EnquiryForm />
+              <div className="flex items-center gap-4 mt-6">
+                <button type="submit"
+                  className="bg-white text-black text-[14px] font-medium px-8 py-3.5 rounded-md hover:bg-white/90 transition-colors duration-200 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                  Request a Demo <ArrowRight size={16} />
+                </button>
+                {status && <p className="text-[13px] text-accent font-medium">{status}</p>}
+              </div>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </section>
+  );
 };
 
-export default ProductsPage;
+
+/* ═══════════════════════════════════════════════
+   MAIN COMPONENT EXPORT
+═══════════════════════════════════════════════ */
+export default function ProductsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <main className="bg-[#0a0a0a] min-h-screen text-white font-sans overflow-x-hidden selection:bg-accent/30 selection:text-white pb-32">
+      <PageHero />
+      <ProSeriesDeepDive />
+      <CSeriesDeepDive />
+      <EcoSeriesDeepDive />
+      <ComparisonTable />
+      <StatsStrip />
+      <EnquiryForm />
+    </main>
+  );
+}

@@ -1,179 +1,234 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { 
+  ArrowRight, CheckCircle2, Shield, Wifi, Cpu, 
+  Monitor, Camera, Network, Server, Globe,
+  Briefcase, Target, Zap
+} from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ─── Reusable scroll-reveal ─────────────────────── */
+const useReveal = (sel, opts = {}) => {
+  const { y = 30, x = 0, stagger = 0.1, start = 'top 85%' } = opts;
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.from(el.querySelectorAll(sel), {
+        scrollTrigger: { trigger: el, start, toggleActions: 'play none none none' },
+        opacity: 0, y, x, duration: 0.85, stagger, ease: 'power3.out',
+      });
+    }, el);
+    return () => ctx.revert();
+  }, [sel, y, x, stagger, start]);
+  return ref;
+};
+
 const AboutPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
+  const heroRef = useReveal('.ab-hero-el', { y: 40 });
+  const storyRef = useReveal('.ab-story-el', { y: 30 });
+  const missionRef = useReveal('.ab-mission-el', { y: 25 });
+  const ecosystemRef = useReveal('.ab-eco-el', { y: 30 });
 
-        const ctx = gsap.context(() => {
-            gsap.from('.fade-up', {
-                y: 40,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: '.fade-up',
-                    start: 'top 85%'
-                }
-            });
-
-            gsap.utils.toArray('.section-anim').forEach(section => {
-                gsap.from(section, {
-                    y: 30,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 85%'
-                    }
-                });
-            });
-        });
-
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <div className="bg-background min-h-screen text-foreground font-sans selection:bg-[#FF9F1B]/20 pb-24">
-
-            {/* 1. Header & Logo */}
-            <header className="pt-24 md:pt-32 pb-12 md:pb-16 px-6 text-left max-w-7xl mx-auto flex flex-col items-start">
-                <img
-                    src={`${import.meta.env.BASE_URL}images/INFINITYX.png`}
-                    alt="Matrix Edge Computers / InfinityX Logo"
-                    className="h-24 md:h-32 object-contain mb-8 filter drop-shadow-sm fade-up"
-                />
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-foreground fade-up">
-                    About Us
-                </h1>
-                <p className="text-xl text-foreground/70 font-medium leading-relaxed max-w-3xl fade-up">
-                    Empowering customers, facilitating easy goal attainment, and fostering a more fulfilling and productive life.
-                </p>
-            </header>
-
-            {/* 2. Main Narrative based on company.md */}
-            <main className="max-w-7xl mx-auto px-6 space-y-12 md:space-y-20">
-
-                <section className="space-y-6 text-lg text-foreground/80 font-medium leading-relaxed section-anim text-justify">
-                    <p>
-                        Matrix Edge Computers (MEC) stands as a premier system integration partner, offering a comprehensive array of IT-integrated products and services. Established in 2013, MEC has navigated a decade-long journey, emerging as a prominent IT Infrastructure Solution provider catering to a diverse clientele, ranging from small and medium businesses to esteemed blue-chip enterprises. Additionally, we specialize in delivering tailored services to educational institutes.
-                    </p>
-                    <p>
-                        With a wealth of experience, MEC excels in providing top-notch IT Infrastructure services across various verticals and technology landscapes. Our customer-centric approach, rooted in unwavering operational excellence, allows us to understand the intricate details of business, technology, and operations. Each encounter fuels our drive for innovation, enabling us to evolve as dynamic solution providers.
-                    </p>
-                    <p>
-                        As a professionally managed, process-driven, and technology-focused System and Network Integrator, MEC specializes in LAN, WAN, WIRELESS, NETWORK MANAGEMENT, STORAGE, SERVERS, DESKTOP SECURITY & SURVEILLANCE, and a diverse array of DISPLAY Solutions domains. Our dedicated team of skilled professionals is committed to proposing technically superior and commercially competitive solutions, positioning MEC as the go-to enterprise solutions provider.
-                    </p>
-                </section>
-
-                <section className="section-anim">
-                    <h2 className="text-3xl font-bold mb-6 text-foreground">Mission</h2>
-                    <p className="text-lg text-foreground/80 font-medium leading-relaxed text-justify">
-                        Our mission is to deliver superior value by offering high-quality products that seamlessly blend performance with competitive pricing. We are dedicated to cultivating successful and lasting relationships with both our customers and suppliers.
-                    </p>
-                </section>
-
-                <section className="section-anim">
-                    <h2 className="text-3xl font-bold mb-6 text-foreground">Our Approach</h2>
-                    <p className="text-lg text-foreground/80 font-medium leading-relaxed mb-8 text-justify">
-                        Rooted in our corporate ethos of perpetual enhancement and seamless integration, our company is steadfastly committed to delivering excellence through the robust framework of its quality management system. Our unwavering dedication is directed towards:
-                    </p>
-                    <ul className="space-y-4">
-                        {[
-                            "Delivering services and products of unparalleled quality that surpass customer expectations.",
-                            "Ensuring optimal value for our customers' investments.",
-                            "Providing courteous and delightful service that aligns seamlessly with both professionalism and personalized attention.",
-                            "Offering candid and efficacious consultation and advice.",
-                            "Ensuring swift and efficient delivery of both services and products."
-                        ].map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-4">
-                                <CheckCircle2 className="w-6 h-6 text-[#FF9F1B] shrink-0 mt-0.5" />
-                                <span className="text-lg text-foreground/80 font-medium text-justify">{item}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-
-                <section className="section-anim">
-                    <h2 className="text-3xl font-bold mb-4 text-foreground">IT Products & Services</h2>
-                    <p className="text-lg text-foreground/80 font-medium leading-relaxed mb-10 text-justify">
-                        In today's fast-paced digital landscape, reliable IT infrastructure is the backbone of any successful organization. We provide a comprehensive suite of hardware, software, and enterprise-grade networking solutions tailored to your specific operational needs. From outfitting campuses with robust WiFi networks to providing end-to-end network integration and high-performance computing hardware, our solutions ensure seamless connectivity and sustained productivity.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-foreground">Desktops, Laptops & Servers</h3>
-                            <ul className="space-y-3">
-                                {['HP', 'Dell', 'Lenovo', 'Acer'].map(brand => (
-                                    <li key={brand} className="flex items-center text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />{brand}</li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-foreground">Networking Solutions</h3>
-                            <ul className="space-y-3">
-                                <li className="flex items-center text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />Campus WiFi solutions</li>
-                                <li className="flex items-center text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />Network Integration</li>
-                                <li className="flex items-center text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />Bandwidth Management</li>
-                            </ul>
-                            <div className="text-sm font-bold text-foreground/50 uppercase tracking-wide mt-4">
-                                D-Link • tp-link • Ubiquiti • Cisco
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="section-anim">
-                    <h2 className="text-3xl font-bold mb-4 text-foreground">Surveillance & Security</h2>
-                    <p className="text-lg text-foreground/80 font-medium leading-relaxed mb-8 text-justify">
-                        Safeguarding your physical assets and ensuring the safety of your personnel or students is paramount. We design and deploy sophisticated, scalable surveillance architectures that provide total geographical awareness. Our integrated security systems empower organizations with real-time monitoring, intelligent access control, and centralized command capabilities to mitigate risks proactively.
-                    </p>
-                    <ul className="space-y-4 mb-8">
-                        <li className="flex items-center text-lg text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />CCTV Architecture and Design Solutions</li>
-                        <li className="flex items-center text-lg text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />CCTV Command Control Room Solutions</li>
-                        <li className="flex items-center text-lg text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />Access Control & Boom Barrier Solutions</li>
-                        <li className="flex items-center text-lg text-foreground/80 font-medium"><ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3" />Integration and Maintenance</li>
-                    </ul>
-                    <div className="text-sm font-bold text-foreground/50 uppercase tracking-wide">
-                        HIKVISION • Dahua • CP PLUS
-                    </div>
-                </section>
-
-                <section className="section-anim">
-                    <h2 className="text-3xl font-bold mb-4 text-foreground">Digital Solutions</h2>
-                    <p className="text-lg text-foreground/80 font-medium leading-relaxed mb-8 text-justify">
-                        The world of education has been constantly evolving and the use of technology in education is one of the biggest innovations which has been re-defining the scope of learning. Realizing its innumerable benefits, schools are building smart classrooms to provide a holistic learning experience to the students.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                        {[
-                            "Interactive Flat Panel (SMART DIGITAL BOARD)",
-                            "Interactive Class Room Setup",
-                            "Digital Studio Setup",
-                            "Interactive Digital Content",
-                            "Auditorium Setup",
-                            "Active Led Walls",
-                            "Digital Signage Solutions",
-                            "Video Conference Solutions",
-                            "Public Addressing Solutions (PA System)",
-                            "Accessories (IFPD STANDS, ENCLOSURES AND STANDS)"
-                        ].map((sol, idx) => (
-                            <div key={idx} className="flex items-start text-foreground/80 font-medium py-2">
-                                <ArrowRight className="w-5 h-5 text-[#FF9F1B] mr-3 shrink-0 mt-0.5" />
-                                <span>{sol}</span>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-            </main>
+  return (
+    <main className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-accent/30 selection:text-white pb-32 overflow-x-hidden">
+      
+      {/* 1. HERO SECTION */}
+      <section ref={heroRef} className="relative pt-24 pb-12 md:pt-40 md:pb-20 px-6 border-b border-white/5">
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+          <div className="ab-hero-el inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[11px] font-bold tracking-[0.2em] uppercase text-white/60 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            Empowering Progress Since 2013
+          </div>
+          
+          <img
+            src={`${import.meta.env.BASE_URL}images/INFINITYX.png`}
+            alt="infinityX Logo"
+            className="ab-hero-el h-20 md:h-28 object-contain mb-12 filter brightness-110 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+          />
+          
+          <h1 className="ab-hero-el text-[48px] md:text-[72px] lg:text-[84px] font-bold text-white tracking-tight leading-[0.95] mb-8">
+            Engineering the <br className="hidden md:block"/> 
+            <span className="text-white/30 italic">Matrix Edge.</span>
+          </h1>
+          
+          <p className="ab-hero-el text-[18px] md:text-[20px] text-white/50 max-w-2xl font-medium leading-relaxed">
+            A decade of precision-engineered IT integration, delivering enterprise-grade infrastructure 
+            and intelligent ecosystems across the Indian landscape.
+          </p>
         </div>
-    );
+      </section>
+
+      {/* 2. THE STORY (Bento Style) */}
+      <section ref={storyRef} className="py-16 md:py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-20">
+            <h2 className="ab-story-el text-[32px] md:text-[48px] font-bold text-white mb-4 tracking-tight">Our Narrative.</h2>
+            <div className="ab-story-el h-1 w-20 bg-accent rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            {/* Main Story Box */}
+            <div className="ab-story-el md:col-span-8 bg-[#111214] border border-white/5 rounded-3xl p-8 md:p-12">
+              <h3 className="text-[24px] font-bold text-white mb-6">A Trusted Integration Partner</h3>
+              <div className="space-y-6 text-[16px] text-white/60 leading-relaxed font-medium">
+                <p>
+                  Matrix Edge Computers (MEC) stands as a premier system integration partner, 
+                  offering a comprehensive array of IT-integrated products and services. 
+                  Established in 2013, MEC has navigated a decade-long journey, emerging as a prominent 
+                  IT Infrastructure Solution provider.
+                </p>
+                <p>
+                  From small businesses to blue-chip enterprises and elite educational institutions, 
+                  we deliver tailored services that translate complex technology into measurable outcomes. 
+                  Our customer-centric approach, rooted in operational excellence, allows us to 
+                  understand the intricate details of business and education.
+                </p>
+              </div>
+            </div>
+
+            {/* Decade Box */}
+            <div className="ab-story-el md:col-span-4 bg-accent/5 border border-accent/10 rounded-3xl p-8 flex flex-col justify-between items-start">
+              <div className="text-accent">
+                <Briefcase size={32} />
+              </div>
+              <div>
+                <span className="text-[64px] font-bold text-accent leading-none">10+</span>
+                <p className="text-[14px] font-bold uppercase tracking-widest text-accent/80 mt-2">Years of Precision</p>
+              </div>
+            </div>
+
+            {/* Expertise Box */}
+            <div className="ab-story-el md:col-span-4 bg-[#111214] border border-white/5 rounded-3xl p-8">
+              <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 mb-6">
+                <Network size={20} />
+              </div>
+              <h4 className="text-[18px] font-bold text-white mb-3">Managed Networks</h4>
+              <p className="text-[14px] text-white/50 leading-relaxed">
+                Specializing in LAN, WAN, and high-density Wireless deployments with precision-driven management.
+              </p>
+            </div>
+
+            {/* Security Box */}
+            <div className="ab-story-el md:col-span-4 bg-[#111214] border border-white/5 rounded-3xl p-8">
+              <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 mb-6">
+                <Shield size={20} />
+              </div>
+              <h4 className="text-[18px] font-bold text-white mb-3">Security & Surveillance</h4>
+              <p className="text-[14px] text-white/50 leading-relaxed">
+                Deploying enterprise-grade CCTV and access control systems for campuses and enterprises.
+              </p>
+            </div>
+
+            {/* Hardware Box */}
+            <div className="ab-story-el md:col-span-4 bg-[#111214] border border-white/5 rounded-3xl p-8">
+              <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 mb-6">
+                <Server size={20} />
+              </div>
+              <h4 className="text-[18px] font-bold text-white mb-3">Computing Hardware</h4>
+              <p className="text-[14px] text-white/50 leading-relaxed">
+                Strategic procurement of high-performance servers, desktops, and enterprise storage solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. MISSION */}
+      <section ref={missionRef} className="py-16 md:py-32 px-6 bg-[#0f0f0f] border-y border-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="ab-mission-el inline-flex items-center gap-2 text-accent text-[11px] font-bold tracking-[0.2em] uppercase mb-8">
+            <Target size={14} /> Our Mission
+          </div>
+          <h2 className="ab-mission-el text-[36px] md:text-[54px] font-bold text-white leading-tight mb-10">
+            Blending high-performance hardware with <span className="text-accent underline underline-offset-8 decoration-white/10">unparalleled value.</span>
+          </h2>
+          <p className="ab-mission-el text-[18px] md:text-[20px] text-white/50 leading-relaxed font-medium">
+            We are dedicated to cultivating successful and lasting relationships with both our customers 
+            and suppliers by delivering superior value and engineering excellence in every deployment.
+          </p>
+        </div>
+      </section>
+
+      {/* 4. ECOSYSTEM (Partners & Expertise) */}
+      <section ref={ecosystemRef} className="py-16 md:py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+            
+            {/* Left: Approach */}
+            <div className="space-y-12">
+              <div>
+                <h2 className="ab-eco-el text-[32px] md:text-[40px] font-bold text-white mb-6">Core Ethos.</h2>
+                <p className="ab-eco-el text-[16px] text-white/50 leading-relaxed font-medium max-w-lg">
+                  Perpetual enhancement and seamless integration are the benchmarks of our framework.
+                </p>
+              </div>
+              
+              <ul className="ab-eco-el space-y-6">
+                {[
+                  "Quality that surpasses customer expectations.",
+                  "Optimal value for every capital investment.",
+                  "Courteous and professional service architecture.",
+                  "Candid and efficacious technical consultation.",
+                  "Swift and efficient end-to-end delivery."
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-4">
+                    <div className="w-6 h-6 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
+                      <CheckCircle2 size={14} className="text-accent" />
+                    </div>
+                    <span className="text-[16px] text-white/70 font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: Portfolio Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="ab-eco-el bg-[#111214] border border-white/5 p-8 rounded-2xl flex flex-col justify-between h-[240px]">
+                <Globe className="text-white/30" />
+                <div>
+                  <h4 className="font-bold text-white mb-2">Digital Studio</h4>
+                  <p className="text-[13px] text-white/50">Setup for professional recording and broadcasting.</p>
+                </div>
+              </div>
+              
+              <div className="ab-eco-el bg-[#111214] border border-white/5 p-8 rounded-2xl flex flex-col justify-between h-[240px]">
+                <Monitor className="text-white/30" />
+                <div>
+                  <h4 className="font-bold text-white mb-2">infinityX Display</h4>
+                  <p className="text-[13px] text-white/50">Standard-setting 4K Interactive Flat Panels.</p>
+                </div>
+              </div>
+
+              <div className="ab-eco-el bg-[#111214] border border-white/5 p-8 rounded-2xl flex flex-col justify-between h-[240px]">
+                <Cpu className="text-white/30" />
+                <div>
+                  <h4 className="font-bold text-white mb-2">AI Integration</h4>
+                  <p className="text-[13px] text-white/50">Smart classrooms powered by behavioral AI.</p>
+                </div>
+              </div>
+
+              <div className="ab-eco-el bg-[#111214] border border-white/5 p-8 rounded-2xl flex flex-col justify-between h-[240px]">
+                <Wifi className="text-white/30" />
+                <div>
+                  <h4 className="font-bold text-white mb-2">Campus WiFi</h4>
+                  <p className="text-[13px] text-white/50">High-speed, scalable network architectures.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  );
 };
 
 export default AboutPage;
