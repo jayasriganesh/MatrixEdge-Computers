@@ -198,17 +198,17 @@ const FeatureCarousel = ({ features, badgeColor }) => {
       <button 
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-[#0a0a0a]/80 text-white/50 hover:bg-white/10 hover:text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 backdrop-blur-md hidden md:flex"
+        className="absolute left-6 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 hidden md:flex"
       >
-        <ChevronLeft size={20} />
+        <ChevronLeft size={28} />
       </button>
 
       <button 
         onClick={nextSlide}
         aria-label="Next slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-[#0a0a0a]/80 text-white/50 hover:bg-white/10 hover:text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 backdrop-blur-md hidden md:flex"
+        className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 hidden md:flex"
       >
-        <ChevronRight size={20} />
+        <ChevronRight size={28} />
       </button>
 
       <div className="absolute top-10 right-10 flex gap-2 z-10 bg-[#0a0a0a]/40 px-3 py-2 rounded-full backdrop-blur-md">
